@@ -1,0 +1,17 @@
+<div class="mat-typography mat-app-background app-frame" fxLayout="column" [ngClass]="themeClass">
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidepanel.toggleState()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span fxFlex>Title</span>
+    <a mat-icon-button routerLink="theme-picker" matTooltip="Theme Picker">
+      <mat-icon>format_color_fill</mat-icon>
+    </a>
+  </mat-toolbar>
+  <div class="app-body mat-app-background" fxFlex fxFill fxLayout="row" fxLayoutAlign="start stretch">
+    <sidepanel></sidepanel>
+    <div fxFlex class="app-panel">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
