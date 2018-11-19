@@ -26,7 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Identity.Mock\Identity.Mock.csproj" />
     <ProjectReference Include="..\Logistics.Data\Logistics.Data.csproj" />
+    <ProjectReference Include="..\Logistics.Identity\Logistics.Identity.csproj" />
   </ItemGroup>
 
   <ItemGroup>

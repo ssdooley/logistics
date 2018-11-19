@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Identity.Mock\Identity.Mock.csproj" />
     <ProjectReference Include="..\Logistics.Data\Logistics.Data.csproj" />
   </ItemGroup>
 
