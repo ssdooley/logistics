@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "dbseeder": {
+      "commandName": "Project",
+      "commandLineArgs": "-c \"Server=(localdb)\\ProjectsV13;Database=logistics-dev;Trusted_Connection=True;\""
+    }
+  }
+}

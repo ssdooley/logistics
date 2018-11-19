@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { SnackerService } from './snacker.service';
-import { ItemGroupCategory } from '../models/item-group-category';
-import { ItemCategory } from '../models/item-category';
+import { SnackerService } from '../snacker.service';
+
+import {
+  ItemCategory,
+  ItemGroupCategory
+} from '../../models';
 
 @Injectable()
 export class ItemCategoryService {

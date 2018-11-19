@@ -1,5 +1,6 @@
 ﻿using Logistics.Data;
 using Logistics.Data.Extensions;
+using Logistics.Identity;
 using Logistics.Web.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -12,11 +13,13 @@ namespace Logistics.Web.Controllers
     {
         private AppDbContext db;
         private UserManager manager;
+        private IUserProvider provider;
 
-        public IdentityController(AppDbContext db, UserManager manager)
+        public IdentityController(AppDbContext db, UserManager manager, IUserProvider provider)
         {
             this.db = db;
             this.manager = manager;
+            this.provider = provider;
         }
 
         [HttpGet("[action]")]
@@ -35,7 +38,7 @@ namespace Logistics.Web.Controllers
         public async Task<User> GetUser([FromRoute]int userId) => await db.GetUser(userId);
 
         [HttpGet("[action]/{user}")]
-        public async Task<List<User>> FindDomainUser([FromRoute]string user) => await user.FindDomainUser();
+        public async Task<List<ADUser>> FindDomainUser([FromRoute]string user) => await provider.FindDomainUser(user);
 
         [HttpPost("[action]")]
         public async Task AddUser([FromBody]User user) => await db.AddUser(user);

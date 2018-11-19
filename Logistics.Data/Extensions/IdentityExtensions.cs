@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using Logistics.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.DirectoryServices;
-using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logistics.Data.Extensions
@@ -72,7 +69,7 @@ namespace Logistics.Data.Extensions
             await db.SaveChangesAsync();
         }
 
-        public static async Task<User> AddOrUpdate(this UserPrincipal principal, AppDbContext db)
+        public static async Task<User> AddOrUpdate(this ADUser principal, AppDbContext db)
         {
             var user = await db.Users.FirstOrDefaultAsync(x => x.Guid == principal.Guid.Value);
 
@@ -83,68 +80,26 @@ namespace Logistics.Data.Extensions
             }
             else
             {
-                await principal.UpdateUser(user);
-                user = await db.UpdateUser(user);
+                user = principal.ToUser(user.Id);
+                await db.SaveChangesAsync();
             }
 
             return user;
         }
 
-        public static User ToUser(this UserPrincipal principal)
+        private static User ToUser(this ADUser user, int? id = null)
         {
-            return new User
+            var u = new User
             {
-                Guid = principal.Guid.Value,
-                Email = principal.UserPrincipalName,
-                Username = principal.DisplayName
+                Guid = user.Guid.Value,
+                Email = user.UserPrincipalName,
+                Username = user.DisplayName
             };
-        }
 
-        public static async Task UpdateUser(this UserPrincipal principal, User user)
-        {
-            user.Guid = principal.Guid.Value;
-            user.Email = principal.UserPrincipalName;
-            user.Username = await principal.SetDisplayName();
-        }
+            if (id.HasValue)
+                u.Id = id.Value;
 
-        private static async Task<String> SetDisplayName(this UserPrincipal principal)
-        {
-            var rank = await principal.GetProperty("title");
-            var splitName = principal.SamAccountName.Split('.');
-            string displayName;
-
-            if (splitName.Count() > 1)
-            {
-                displayName = ($"{rank} {splitName[1]}, {splitName[0]}").Trim();
-            }
-            else
-            {
-                displayName = ($"{rank} {principal.DisplayName}").Trim();
-            }
-
-            return displayName;
-        }
-
-        private static Task<string> GetProperty(this UserPrincipal principal, string property)
-        {
-            return Task.Run(() =>
-            {
-                try
-                {
-                    DirectoryEntry entry = principal.GetUnderlyingObject() as DirectoryEntry;
-
-                    if (entry.Properties.Contains(property))
-                    {
-                        return entry.Properties[property].Value.ToString();
-                    }
-
-                    return string.Empty;
-                }
-                catch
-                {
-                    return string.Empty;
-                }
-            });
+            return u;
         }
     }
 }

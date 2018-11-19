@@ -1,5 +1,7 @@
+using Identity.Mock;
 using Logistics.Data;
 using Logistics.Data.Extensions;
+using Logistics.Identity;
 using Logistics.Web.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -18,44 +20,72 @@ namespace Logistics.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options =>
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Dev")));
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                if (Environment.IsDevelopment())
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("Dev"));
+                }
+                else
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("Default"));
+                }
+            });
+
+            if (Environment.IsDevelopment())
+            {
+                services.AddScoped<IUserProvider, MockProvider>();
+            }
+            else
+            {
+                services.AddScoped<IUserProvider, ADUserProvider>();
+            }
+
+            services.AddScoped<UserManager>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
-            services.AddScoped<UserManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (!(env.IsDevelopment()))
-            {
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
+            app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            if (env.IsDevelopment())
+            {
+                app.UseMockMiddleware();
+            }
+            else
+            {
+                app.UseADUserMiddleware();
+            }
+
             app.UseUserMiddleware();
 
             app.UseExceptionHandler(errorApp =>

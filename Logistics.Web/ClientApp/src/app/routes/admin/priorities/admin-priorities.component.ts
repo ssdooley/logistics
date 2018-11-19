@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PriorityService } from '../../../services/priority.service';
+import { PriorityService } from '../../../services';
 
 @Component({
   selector: 'admin-priorities',

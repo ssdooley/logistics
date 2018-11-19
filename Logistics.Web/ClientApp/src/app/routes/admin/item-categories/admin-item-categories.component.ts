@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemCategoryService } from '../../../services/item-category.service';
+import { ItemCategoryService } from '../../../services';
 
 @Component({
   selector: 'admin-item-categories',

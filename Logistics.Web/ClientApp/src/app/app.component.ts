@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SidepanelService } from './services/sidepanel.service';
-import { ThemeService } from './services/theme.service';
-import { Theme } from './models/theme';
+import { Theme } from './models';
+
+import {
+  SidepanelService,
+  ThemeService
+} from './services';
 
 @Component({
   selector: 'app-root',

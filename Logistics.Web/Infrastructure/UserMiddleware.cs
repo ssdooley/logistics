@@ -17,14 +17,12 @@ namespace Logistics.Web.Infrastructure
 
         public async Task Invoke(HttpContext httpContext, UserManager userManager)
         {
-            if (!(userManager.Initialized))
+            if (!userManager.Initialized)
             {
                 await userManager.Create(httpContext);
             }
 
             await next(httpContext);
-
-            userManager.Dispose();
         }
     }
 }

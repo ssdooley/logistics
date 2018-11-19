@@ -1,5 +1,5 @@
-@import './material-styles.scss';
-@import './material-snacker.scss';
+@import "./material-styles.scss";
+@import "./material-snacker.scss";
 
 $light-blue: mat-palette($mat-light-blue, A400);
 $red: mat-palette($mat-red);
@@ -34,15 +34,15 @@ $default-theme: mat-dark-theme($green-dark, $light-blue);
 }
 
 .dark-blue {
-    $default-theme: mat-dark-theme($light-blue, $green-dark);
-    @include style-theme($default-theme);
-    @include angular-material-theme($default-theme);
+  $default-theme: mat-dark-theme($light-blue, $green-dark);
+  @include style-theme($default-theme);
+  @include angular-material-theme($default-theme);
 }
 
 .dark-red {
-    $default-theme: mat-dark-theme($red, $light-blue, $pink);
-    @include style-theme($default-theme);
-    @include angular-material-theme($default-theme);
+  $default-theme: mat-dark-theme($red, $light-blue, $pink);
+  @include style-theme($default-theme);
+  @include angular-material-theme($default-theme);
 }
 
 .dark-indigo {
@@ -83,21 +83,21 @@ $default-theme: mat-dark-theme($green-dark, $light-blue);
 
 /*-- Light Themes --*/
 .light-green {
-    $default-theme: mat-light-theme($green-light, $light-blue);
-    @include style-theme($default-theme);
-    @include angular-material-theme($default-theme);
+  $default-theme: mat-light-theme($green-light, $light-blue);
+  @include style-theme($default-theme);
+  @include angular-material-theme($default-theme);
 }
 
 .light-blue {
-    $default-theme: mat-light-theme($light-blue, $green-light);
-    @include style-theme($default-theme);
-    @include angular-material-theme($default-theme);
+  $default-theme: mat-light-theme($light-blue, $green-light);
+  @include style-theme($default-theme);
+  @include angular-material-theme($default-theme);
 }
 
 .light-red {
-    $default-theme: mat-light-theme($red, $light-blue, $pink);
-    @include style-theme($default-theme);
-    @include angular-material-theme($default-theme);
+  $default-theme: mat-light-theme($red, $light-blue, $pink);
+  @include style-theme($default-theme);
+  @include angular-material-theme($default-theme);
 }
 
 .light-indigo {

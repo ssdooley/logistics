@@ -15,8 +15,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
-    <PackageReference Include="system.directoryservices" Version="4.5.0" />
-    <PackageReference Include="system.directoryservices.accountmanagement" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,6 +11,7 @@
   $accent: mat-color($a);
   $warn: mat-color($w);
   $background: mat-color($b, background);
+  $background-card: mat-color($b, card);
   $foreground: mat-color($f, text);
   $app-bar: mat-color($b, app-bar);
   $primary-contrast: mat-color($p, default-contrast);
@@ -44,6 +45,14 @@
     color: $warn-contrast;
   }
 
+  .background.card {
+    background-color: $background-card;
+  }
+
+  .background.stacked {
+    background-color: $background;
+  }
+
   code.snippet,
   a.link {
     color: $primary;
@@ -63,8 +72,8 @@
     background-color: $background;
   }
 
-  .active.active div.mat-list-item-content,
-  a.active {
+  a.mat-list-item.active,
+  a.mat-tab-link.active {
     color: $primary;
   }
 
@@ -74,14 +83,14 @@
 }
 
 html, body, app, .app-frame, .app-body {
-    overflow: hidden;
-    margin: 0;
-    height: 100%;
+  overflow: hidden;
+  margin: 0;
+  height: 100%;
 }
 
 .app-panel {
-    height: 100%;
-    overflow: auto;
+  height: 100%;
+  overflow: auto;
 }
 
 .mat-typography h1,
@@ -90,6 +99,64 @@ html, body, app, .app-frame, .app-body {
 .mat-typography h4,
 .mat-typography h5,
 .mat-typography h6,
-.mat-typography p {
+.mat-typography p,
+mat-form-field.mat-form-field {
   margin: 8px;
+}
+
+mat-toolbar.mat-toolbar.app-toolbar {
+  padding: 0 8px;
+
+  button.mat-icon-button {
+    margin-right: 8px;
+  }
+}
+
+mat-toolbar.mat-toolbar {
+  span {
+    margin-right: 4px;
+    margin-left: 4px;
+  }
+
+  button.mat-button {
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+}
+
+a.mat-tab-link {
+  min-width: 80px;
+}
+
+.container {
+  padding: 4px;
+}
+
+.card {
+  margin: 4px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+img.thumbnail {
+  height: 80px;
+}
+
+img.profile-image {
+  height: 200px;
+}
+
+.static-elevation {
+  @include mat-elevation(2);
+}
+
+.elevated {
+  @include mat-elevation-transition;
+  @include mat-elevation(2);
+
+  &:hover {
+    @include mat-elevation(6);
+  }
 }

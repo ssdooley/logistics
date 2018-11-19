@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ManufacturerService } from '../../../services/manufacturer.service';
+import { ManufacturerService } from '../../../services';
 
 @Component({
   selector: 'admin-manufacturers',

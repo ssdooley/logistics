@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { BehaviorSubject } from 'rxjs';
-import { Theme } from '../models/theme';
+import { Theme } from '../models';
 
 @Injectable()
 export class ThemeService {

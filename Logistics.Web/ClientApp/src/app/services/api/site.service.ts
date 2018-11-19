@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { SnackerService } from './snacker.service';
-import { Site } from '../models/site';
+import { SnackerService } from '../snacker.service';
+import { Site } from '../../models';
 
 @Injectable()
 export class SiteService {

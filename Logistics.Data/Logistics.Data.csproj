@@ -7,8 +7,10 @@
   <ItemGroup>
     <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.1.4" />
     <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.1.4" />
-    <PackageReference Include="system.directoryservices" Version="4.5.0" />
-    <PackageReference Include="system.directoryservices.accountmanagement" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Logistics.Identity\Logistics.Identity.csproj" />
   </ItemGroup>
 
   <ItemGroup>

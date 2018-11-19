@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { trigger, state, transition, style, animate } from '@angular/animations';
-import { SidepanelService } from '../../services/sidepanel.service';
+import { SidepanelService } from '../../services';
 
 @Component({
   selector: 'sidepanel',

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { SnackerService } from './snacker.service';
-import { Priority } from '../models/priority';
+import { SnackerService } from '../snacker.service';
+import { Priority } from '../../models';
 
 @Injectable()
 export class PriorityService {

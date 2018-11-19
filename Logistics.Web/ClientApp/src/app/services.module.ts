@@ -1,27 +1,21 @@
 import { NgModule } from '@angular/core';
-
-import { CoreService } from './services/core.service';
-import { SnackerService } from './services/snacker.service';
-import { ThemeService } from './services/theme.service';
-import { SidepanelService } from './services/sidepanel.service';
-
-import { SanitizeUrlPipe } from './pipes/sanitize-url.pipe';
-import { TruncatePipe } from './pipes/truncate.pipe';
+import { HttpClientModule } from '@angular/common/http';
+import { Services } from './services';
+import { Pipes } from './pipes';
 
 @NgModule({
     providers: [
-        CoreService,
-        SnackerService,
-        ThemeService,
-        SidepanelService
+      [...Services]
     ],
     declarations: [
-        SanitizeUrlPipe,
-        TruncatePipe
+      [...Pipes]
+    ],
+    imports: [
+      HttpClientModule
     ],
     exports: [
-        SanitizeUrlPipe,
-        TruncatePipe
+      [...Pipes],
+      HttpClientModule
     ]
 })
 export class ServicesModule { }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { SnackerService } from './snacker.service';
-import { User } from '../models/user';
+import { User } from '../models';
 
 @Injectable()
 export class IdentityService {
