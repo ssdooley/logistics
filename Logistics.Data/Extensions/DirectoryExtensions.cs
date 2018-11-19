@@ -1,12 +1,12 @@
-﻿using Logistics.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Security.Principal;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Logistics.Web.Extensions
+namespace Logistics.Data.Extensions
 {
     public static class DirectoryExtensions
     {

@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Web", "Logistics.Web\Logistics.Web.csproj", "{6FC8306E-E9F8-44F0-A5EB-3A57D745502A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logistics.Web", "Logistics.Web\Logistics.Web.csproj", "{6FC8306E-E9F8-44F0-A5EB-3A57D745502A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Data", "Logistics.Data\Logistics.Data.csproj", "{386A189E-80D3-41BC-8C20-21EE21EEC8D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logistics.Data", "Logistics.Data\Logistics.Data.csproj", "{386A189E-80D3-41BC-8C20-21EE21EEC8D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logistics.Identity", "Logistics.Identity\Logistics.Identity.csproj", "{9288B16E-A762-4C30-BC86-A9F942C4DF6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Mock", "Identity.Mock\Identity.Mock.csproj", "{6A0E8F3C-5580-4B05-BED0-C1267540F623}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dbseeder", "dbseeder\dbseeder.csproj", "{F79D8762-9C6D-4670-8B3D-D72220EC1D84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{386A189E-80D3-41BC-8C20-21EE21EEC8D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{386A189E-80D3-41BC-8C20-21EE21EEC8D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{386A189E-80D3-41BC-8C20-21EE21EEC8D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9288B16E-A762-4C30-BC86-A9F942C4DF6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9288B16E-A762-4C30-BC86-A9F942C4DF6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9288B16E-A762-4C30-BC86-A9F942C4DF6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9288B16E-A762-4C30-BC86-A9F942C4DF6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A0E8F3C-5580-4B05-BED0-C1267540F623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A0E8F3C-5580-4B05-BED0-C1267540F623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A0E8F3C-5580-4B05-BED0-C1267540F623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A0E8F3C-5580-4B05-BED0-C1267540F623}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F79D8762-9C6D-4670-8B3D-D72220EC1D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F79D8762-9C6D-4670-8B3D-D72220EC1D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F79D8762-9C6D-4670-8B3D-D72220EC1D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F79D8762-9C6D-4670-8B3D-D72220EC1D84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,10 @@
-﻿using Logistics.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Logistics.Web.Extensions
+namespace Logistics.Data.Extensions
 {
     public static class ItemCategoryExtensions
     {

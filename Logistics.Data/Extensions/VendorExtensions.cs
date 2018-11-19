@@ -1,11 +1,10 @@
-﻿using Logistics.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Logistics.Web.Extensions
+namespace Logistics.Data.Extensions
 {
     public static class VendorExtensions
     {
@@ -30,7 +29,7 @@ namespace Logistics.Web.Extensions
         public static async Task<Vendor> GetVendor(this AppDbContext db, int id)
         {
             var model = await db.Vendors.FindAsync(id);
-            return model;            
+            return model;
         }
 
         public static async Task AddVendor(this AppDbContext db, Vendor vendor)

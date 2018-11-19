@@ -1,5 +1,5 @@
 using Logistics.Data;
-using Logistics.Web.Extensions;
+using Logistics.Data.Extensions;
 using Logistics.Web.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;

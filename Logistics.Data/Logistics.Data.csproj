@@ -1,12 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.1.0" />
-    <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.1.0" />
+    <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.1.4" />
+    <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.1.4" />
+    <PackageReference Include="system.directoryservices" Version="4.5.0" />
+    <PackageReference Include="system.directoryservices.accountmanagement" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

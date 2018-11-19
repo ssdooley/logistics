@@ -1,15 +1,13 @@
-﻿using Logistics.Data;
-using Logistics.Web.Infrastructure;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Logistics.Web.Extensions
+namespace Logistics.Data.Extensions
 {
     public static class IdentityExtensions
     {
@@ -72,11 +70,6 @@ namespace Logistics.Web.Extensions
             var user = await db.GetUser(userId);
             user.IsAdmin = !user.IsAdmin;
             await db.SaveChangesAsync();
-        }
-
-        public static IApplicationBuilder UseUserMiddleware(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<UserMiddleware>();
         }
 
         public static async Task<User> AddOrUpdate(this UserPrincipal principal, AppDbContext db)

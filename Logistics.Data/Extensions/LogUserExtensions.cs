@@ -1,11 +1,10 @@
-﻿using Logistics.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Logistics.Web.Extensions
+namespace Logistics.Data.Extensions
 {
     public static class LogUserExtensions
     {
@@ -48,8 +47,8 @@ namespace Logistics.Web.Extensions
         {
             var model = await db.LogUsers
                 .SetIncludes()
-                .FirstOrDefaultAsync(x => 
-                    x.UserId == userId && 
+                .FirstOrDefaultAsync(x =>
+                    x.UserId == userId &&
                     x.SiteId == siteId
                 );
 
@@ -110,7 +109,7 @@ namespace Logistics.Web.Extensions
             }
 
             return true;
-                
+
         }
     }
 }

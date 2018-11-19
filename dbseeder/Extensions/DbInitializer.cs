@@ -1,10 +1,8 @@
 ﻿using Logistics.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Logistics.Web.Extensions
+namespace dbseeder.Extensions
 {
     public static class DbInitializer
     {
