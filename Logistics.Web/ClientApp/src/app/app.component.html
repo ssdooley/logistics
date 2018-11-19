@@ -8,6 +8,7 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span fxFlex>Title</span>
+    <p *ngIf="identity.currentUser$ | async as user else loading">Hello {{user.username}}</p>
   </mat-toolbar>
   <div class="app-body mat-app-background"
        fxFlex
@@ -18,6 +19,9 @@
     <div fxFlex
          class="app-panel">
       <router-outlet></router-outlet>
+      <ng-template #loading>
+        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+      </ng-template>
     </div>
   </div>
 </div>
