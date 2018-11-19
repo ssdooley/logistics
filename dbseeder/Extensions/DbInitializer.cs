@@ -1,4 +1,6 @@
 ﻿using Logistics.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,10 +10,14 @@ namespace dbseeder.Extensions
     {
         public static void Initialize(this AppDbContext db)
         {
-            db.Database.EnsureCreated();
+            Console.WriteLine("Initializing database");
+
+            db.Database.Migrate();
 
             if (!(db.ItemGroupCategories.Any()))
             {
+                Console.WriteLine("Seeding item categories");
+
                 var categories = new List<ItemGroupCategory>()
                 {
                     new ItemGroupCategory { Label = "Serialized" },
@@ -24,6 +30,8 @@ namespace dbseeder.Extensions
                 db.ItemGroupCategories.AddRange(categories);
                 db.SaveChanges();
             }
+
+            Console.WriteLine("Finished seeding database...");
         }
     }
 }
