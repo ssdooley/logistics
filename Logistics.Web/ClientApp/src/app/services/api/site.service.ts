@@ -19,6 +19,8 @@ export class SiteService {
     private snacker: SnackerService
   ) { }
 
+  trackSites = (site: Site) => site.id;
+
   getSites = () => this.http.get<Site[]>('/api/site/getSites')
     .subscribe(
       data => this.sites.next(data),

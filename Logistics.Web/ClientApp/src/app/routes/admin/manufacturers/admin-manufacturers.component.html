@@ -1,1 +1,42 @@
-<h1>Manufacturers Component</h1>
+<div *ngIf="service.manufacturers$ | async as manufacturers else loading">
+  <div *ngIf="itemCategoryService.itemGroupCategories$ | async as groups">
+    <div class="container">
+      <mat-form-field>
+        <input matInput placeholder="Manufacturer" [(ngModel)]="newManufacturer.name" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Select Category Group" [(ngModel)]="selectedItemGroupCategory" name="Group Categories" (selectionChange)="selectGroupCategory()">
+          <mat-option fxLayoutAlign="center center" *ngFor="let g of groups" [value]="g">
+            <p fxLayoutAlign="center center">{{g.label}}</p>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Select Item Category" [(ngModel)]="selectedItemCategory" name="Item Categories" (selectionChange)="selectItemCategory()">
+          <section *ngIf="itemCategoryService.itemCategories$ | async as items">
+            <mat-option fxLayoutAlign="center center" *ngFor="let i of items" [value]="i">
+              <p fxLayoutAlign="center center">{{i.label}}</p>
+            </mat-option>
+          </section>
+        </mat-select>
+      </mat-form-field>
+      <button *ngIf="selectedItem" mat-button color="accent" [disabled]="saving" (click)="addManufacturer()">Add</button>
+    </div>
+    <mat-toolbar>
+      <span>{{selectedItemCategory.label}} Manufacturers</span>
+      <button mat-button (click)="showManufacturerBin()">
+        <mat-icon>delete</mat-icon> Recycle Bin
+      </button>
+    </mat-toolbar>
+    <section *ngIf="service.manufacturers$ | async as manufacturers" fxLayout="column" fxLayoutAlign="start start" class="container">
+      <div *ngFor="let m of manufacturers" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+        <h2 fxFlex>{{m.name}} -</h2>
+        <h3 fxFlex>{{m.itemCategory.label}}</h3>
+        <section fxLayout="row" fxLayoutAlign="center center">
+          <!--<button mat-button color="primary" (click)="updateManufacturer(m)" fxFlex>Update</button>-->
+          <button mat-button color="warn" (click)="toggleManufacturerDeleted(m)" fxFlex>Delete</button>
+        </section>
+      </div>
+    </section>    
+  </div>
+</div>

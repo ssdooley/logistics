@@ -65,7 +65,7 @@ namespace Logistics.Data.Extensions
         public static async Task ToggleUserIsDeleted(this AppDbContext db, int userId)
         {
             var user = await db.GetUser(userId);
-            user.IsAdmin = !user.IsAdmin;
+            user.IsDeleted = !user.IsDeleted;
             await db.SaveChangesAsync();
         }
 
@@ -87,7 +87,7 @@ namespace Logistics.Data.Extensions
             return user;
         }
 
-        private static User ToUser(this ADUser user, int? id = null)
+        public static User ToUser(this ADUser user, int? id = null)
         {
             var u = new User
             {

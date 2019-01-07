@@ -1,0 +1,37 @@
+<h3>Update Vendor Information</h3>
+<div class="mat-typography">
+  <h2 mat-dialog-title>Vendor Recycle Bin</h2>
+  <!--<div *ngIf="service.vendor$ | async as vendor else loading">-->
+    <div mat-dialog-content>
+      <section fxLayout="column" fxLayoutAlign="start start" class="container">
+        <div class="background card elevated" fxLayout="column" fxLayoutAlign="start center">
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Vendor Name" [(ngModel)]="currentVendor.name" />
+          </mat-form-field>
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Contact" [(ngModel)]="currentVendor.contact" />
+          </mat-form-field>
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Phone Number" [(ngModel)]="currentVendor.phone" />
+          </mat-form-field>
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Website URL" [(ngModel)]="currentVendor.website" />
+          </mat-form-field>
+          <mat-form-field floatLabel="never">
+            <input matInput placeholder="Email" [(ngModel)]="currentVendor.email" />
+          </mat-form-field>          
+          <section fxLayout="row" fxLayoutAlign="center center">
+            <button mat-button color="primary" (click)="updateVendor(currentVendor)" fxFlex>Update</button>
+          </section>
+        </div>
+      </section>
+      <!--<h3 *ngIf="!(vendor.length > 0)">No Vendors Found</h3>-->
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+    </div>
+  <!--</div>-->
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  </ng-template>
+</div>

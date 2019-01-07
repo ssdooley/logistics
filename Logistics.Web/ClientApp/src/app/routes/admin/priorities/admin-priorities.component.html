@@ -1,1 +1,29 @@
-<h1>Priorities Component</h1>
+<div *ngIf="service.priorities$ | async as priorities else loading">
+  <div class="container">
+    <mat-form-field>
+      <input matInput placeholder="Priority" [(ngModel)]="newPriority.label" />
+    </mat-form-field>
+    <button mat-button color="accent" [disabled]="saving" (click)="addPriority()">Add</button>
+  </div>
+  <mat-toolbar>
+    <span>Priorities</span>
+    <button mat-button (click)="showPriorityBin()">
+      <mat-icon>delete</mat-icon> Recycle Bin
+    </button>
+  </mat-toolbar>
+  <section *ngIf="priorities.length > 0" fxLayout="column" fxLayoutAlign="start start" class="container">
+    <div *ngFor="let p of priorities; trackBy: service.trackPriorities" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+      <mat-form-field floatLabel="never">
+        <input matInput placeholder="Priority" [(ngModel)]="p.label" />
+      </mat-form-field>
+      <section fxLayout="row" fxLayoutAlign="center center">
+        <button mat-button color="primary" (click)="updatePriorities(p)" fxFlex>Update</button>
+        <button mat-button color="warn" (click)="togglePriorityDeleted(p)" fxFlex>Delete</button>
+      </section>
+    </div>
+  </section>
+  <h3 *ngIf="!(priorities.length > 0)">No Priorities Found</h3>
+</div>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>

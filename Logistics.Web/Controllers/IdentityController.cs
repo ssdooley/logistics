@@ -41,7 +41,11 @@ namespace Logistics.Web.Controllers
         public async Task<List<ADUser>> FindDomainUser([FromRoute]string user) => await provider.FindDomainUser(user);
 
         [HttpPost("[action]")]
-        public async Task AddUser([FromBody]User user) => await db.AddUser(user);
+        public async Task AddUser([FromBody]ADUser adUser)
+        {
+            var user = adUser.ToUser();
+            await db.AddUser(user);
+        }
 
         [HttpPost("[action]")]
         public async Task UpdateUser([FromBody]User user) => await db.UpdateUser(user);

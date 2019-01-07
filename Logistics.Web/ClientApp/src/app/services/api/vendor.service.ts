@@ -19,6 +19,8 @@ export class VendorService {
     private snacker: SnackerService
   ) { }
 
+  trackVendors = (vendors: Vendor) => vendors.id;
+
   getVendors = () => this.http.get<Vendor[]>('/api/vendor/getVendors')
     .subscribe(
       data => this.vendors.next(data),

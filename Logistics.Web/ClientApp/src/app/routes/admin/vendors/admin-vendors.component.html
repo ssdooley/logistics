@@ -1,1 +1,46 @@
-<h1>Vendors Component</h1>
+<div *ngIf="service.vendors$ | async as vendors else loading">
+  <div class="container">
+    <div fxLayout="row" fxLayoutAlign="start start">
+      <mat-form-field>
+        <input matInput placeholder="Vendor Name" [(ngModel)]="newVendor.name" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Contact" [(ngModel)]="newVendor.contact" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Phone Number" [(ngModel)]="newVendor.phone" />
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start start">
+      <mat-form-field>
+        <input matInput placeholder="Website URL" [(ngModel)]="newVendor.website" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="newVendor.email" />
+      </mat-form-field>
+      <button mat-raised-button color="accent" [disabled]="saving" (click)="addVendor()">Add</button>
+    </div>      
+  </div>
+  <mat-toolbar>
+    <span>Vendors</span>
+    <button mat-button (click)="showVendorBin()">
+      <mat-icon>delete</mat-icon> Recycle Bin
+    </button>
+  </mat-toolbar>
+  <section *ngIf="vendors.length > 0" fxLayout="column" fxLayoutAlign="start start" class="container">
+    <div *ngFor="let v of vendors" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+      <h2>{{v.name}}</h2>
+      <p>{{v.email}}</p>
+      <p>{{v.phone}}</p>
+      <section fxLayout="row" fxLayoutAlign="center center">
+        <button mat-button color="primary" (click)="updateVendor(v)" fxFlex>Update</button>
+        <button mat-button color="warn" (click)="toggleVendorDeleted(v)" fxFlex>Delete</button>
+      </section>
+    </div>
+  </section>
+  <h3 *ngIf="!(vendors.length > 0)">No Vendors Found</h3>
+</div>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>
+

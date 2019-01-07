@@ -1,0 +1,35 @@
+<div *ngIf="service.authorizedRegulations$ | async as regs else loading">
+  <div class="container">
+    <mat-form-field>
+      <input matInput placeholder="Subject" [(ngModel)]="newAuthorizedRegulation.name" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Reference (AFI/Policy #)" [(ngModel)]="newAuthorizedRegulation.reference" />
+    </mat-form-field>
+    <button mat-button color="accent" [disabled]="saving" (click)="addAuthorizedRegulation()">Add</button>
+  </div>
+  <mat-toolbar>
+    <span>Authorized Regulations</span>
+    <button mat-button (click)="showAuthorizedRegulationBin()">
+      <mat-icon>delete</mat-icon> Recycle Bin
+    </button>
+  </mat-toolbar>
+  <section *ngIf="regs.length > 0" fxLayout="column" fxLayoutAlign="start start">
+    <div *ngFor="let r of regs; trackBy: service.trackAuthorizedRegulations" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+      <mat-form-field floatLabel="never">
+        <input matInput placeholder="Subject" [(ngModel)]="r.name" />
+      </mat-form-field>
+      <mat-form-field floatLabel="never">
+        <input matInput placeholder="Reference" [(ngModel)]="r.reference" />
+      </mat-form-field>
+      <section fxLayout="row" fxLayoutAlign="center center">
+        <button mat-button color="primary" (click)="updateAuthorizedRegulations(r)" fxFlex>Update</button>
+        <button mat-button color="warn" (click)="toggleAuthorizedRegulationDeleted(r)" fxFlex>Delete</button>
+      </section>
+    </div>
+  </section>
+  <h3 *ngIf="!(regs.length > 0)">No Authorized Regulations Founds</h3>
+</div>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>

@@ -6,6 +6,7 @@
         public int? ItemGroupId { get; set; }
         public int RequestId { get; set; }
         public string Name { get; set; }
+        public string PartNumber { get; set; }
         public double Cost { get; set; }
         public int Quantity { get; set; }
 

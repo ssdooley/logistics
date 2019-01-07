@@ -19,6 +19,8 @@ export class PriorityService {
     private snacker: SnackerService
   ) { }
 
+  trackPriorities = (priority: Priority) => priority.id;
+
   getPriorities = () => this.http.get<Priority[]>('/api/priority/getPriorities')
     .subscribe(
       data => this.priorities.next(data),

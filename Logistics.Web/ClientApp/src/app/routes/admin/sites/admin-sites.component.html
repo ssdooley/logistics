@@ -1,1 +1,29 @@
-<h1>Sites Component</h1>
+<div *ngIf="service.sites$ | async as sites else loading">
+  <div class="container">
+    <mat-form-field>
+      <input matInput placeholder="Site" [(ngModel)]="newSite.name" />
+    </mat-form-field>
+    <button mat-button color="accent" [disabled]="saving" (click)="addSite()">Add</button>
+  </div>
+  <mat-toolbar>
+    <span>Sites</span>
+    <button mat-button (click)="showSiteBin()">
+      <mat-icon>delete</mat-icon> Recycle Bin
+    </button>
+  </mat-toolbar>
+  <section *ngIf="sites.length > 0" fxLayout="column" fxLayoutAlign="start start" class="container">
+    <div *ngFor="let s of sites; trackBy: service.trackSites" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+      <mat-form-field floatLabel="never">
+        <input matInput placeholder="Site" [(ngModel)]="s.name" />
+      </mat-form-field>
+      <section fxLayout="row" fxLayoutAlign="center center">
+        <button mat-button color="primary" (click)="updateSite(s)" fxFlex>Update</button>
+        <button mat-button color="warn" (click)="toggleSiteDeleted(s)" fxFlex>Delete</button>
+      </section>
+    </div>
+  </section>
+  <h3 *ngIf="!(sites.length > 0)">No Sites Found</h3>
+</div>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template> 

@@ -7,6 +7,10 @@ import { AdminPrioritiesComponent } from './admin/priorities/admin-priorities.co
 import { AdminSitesComponent } from './admin/sites/admin-sites.component';
 import { AdminUsersComponent } from './admin/users/admin-users.component';
 import { AdminVendorsComponent } from './admin/vendors/admin-vendors.component';
+import { AdminAuthorizedRegulationComponent } from './admin/authorized-regulation/admin-authorized-regulation.component';
+import { PurchaseComponent } from './purchase/purchase.component';
+import { PropertyComponent } from './property/property.component';
+import { PurchaseRequestComponent } from './purchase/request/purchase-request.component';
 
 export const RouteComponents = [
   HomeComponent,
@@ -16,7 +20,12 @@ export const RouteComponents = [
   AdminPrioritiesComponent,
   AdminSitesComponent,
   AdminUsersComponent,
-  AdminVendorsComponent
+  AdminVendorsComponent,
+  AdminAuthorizedRegulationComponent,
+  PurchaseComponent,
+  PurchaseRequestComponent,
+  PropertyComponent,
+
 ];
 
 export const Routes: Route[] = [
@@ -32,9 +41,18 @@ export const Routes: Route[] = [
       { path: 'item-categories', component: AdminItemCategoriesComponent },
       { path: 'manufacturers', component: AdminManufacturersComponent },
       { path: 'vendors', component: AdminVendorsComponent },
+      { path: 'authorized-regulations', component: AdminAuthorizedRegulationComponent },
       { path: '**', redirectTo: 'users', pathMatch: 'full' }
     ]
   },
+  {
+    path: 'purchase', component: PurchaseComponent,
+    children: [
+      { path: '', redirectTo: 'purchase-request', pathMatch: 'full' },
+      { path: 'purchase-request', component: PurchaseRequestComponent }
+    ]
+  },
+  { path: 'property', component: PropertyComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

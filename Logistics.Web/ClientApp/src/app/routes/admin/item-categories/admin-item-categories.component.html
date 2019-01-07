@@ -1,1 +1,46 @@
-<h1>Item Categories Component</h1>
+<div *ngIf="service.itemGroupCategories | async as groups else loading">
+  <div class="container">
+    <mat-form-field style="width:400px;">
+      <mat-select placeholder="Select Item Category Group" [(ngModel)]="selectedItemGroupCategory" name="Groups" (selectionChange)="consoleLogGroupCategory()">
+        <mat-option fxLayoutAlign="center center" *ngFor="let g of groups" [value]="g">
+          <p fxLayoutAlign="center center">{{g.label}}</p>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div *ngIf="selectedItemGroupCategory?.id">
+    <mat-toolbar>
+      <p>Add New Category to group</p>
+      <p>-{{selectedItemGroupCategory.label}}-</p>      
+    </mat-toolbar>
+    <section>
+      <div class="container">
+        <mat-form-field>
+          <input matInput placeholder="Category" [(ngModel)]="newItemCategory.label" />
+        </mat-form-field>
+        <button mat-button color="accent" [disabled]="saving" (click)="addItemCategory()">Add</button>
+      </div>
+    </section>
+    <mat-toolbar>
+      <span>{{selectedItemGroupCategory.label}} Categories</span>
+      <button mat-button (click)="showItemCategoryBin()">
+        <mat-icon>delete</mat-icon> Recycle Bin
+      </button>
+    </mat-toolbar>
+    <section *ngIf="service.itemCategories | async as items" fxLayout="column" fxLayoutAlign="start start" class="container">
+      <div *ngFor="let i of items" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+        <mat-form-field>
+          <input matInput placeholder="Category" [(ngModel)]="i.label" />
+        </mat-form-field>
+        <section fxLayout="row" fxLayoutAlign="center center">
+          <button *ngIf="(i.items)" mat-button color="primary" (click)="updateItemCategories(i)" fxFlex>Update</button>
+          <button mat-button color="warn" (click)="toggleItemCategoryDeleted(i)" fxFlex>Delete</button>
+        </section>
+      </div>
+    </section>
+  </div>
+</div>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>
+

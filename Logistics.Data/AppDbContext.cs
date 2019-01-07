@@ -12,6 +12,7 @@ namespace Logistics.Data
         public DbSet<ApprovalTemplateGroup> ApprovalTemplateGroups { get; set; }
         public DbSet<Approver> Approvers { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<AuthorizedRegulation> AuthorizedRegulations { get; set; }
         public DbSet<FundingAccount> FundingAccounts { get; set; }
         public DbSet<FundTransaction> FundTransactions { get; set; }
         public DbSet<FundUser> FundUsers { get; set; }

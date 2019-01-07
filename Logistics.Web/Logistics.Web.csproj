@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
@@ -24,9 +25,43 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\dialogs\bins\admin\authorized-regulation-bin.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\bins\admin\item-category-bin.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\bins\admin\manufacturer-bin.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\bins\admin\priority-bin.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\bins\admin\site-bin.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\bins\admin\user-bin.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\bins\admin\vendor-bin.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\updates\vendor-update.dialog.ts" />
+    <None Remove="ClientApp\src\app\models\adUser.ts" />
+    <None Remove="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
+    <None Remove="ClientApp\src\app\routes\property\property.component.ts" />
+    <None Remove="ClientApp\src\app\routes\purchase\purchase.component.ts" />
+    <None Remove="ClientApp\src\app\routes\purchase\request\purchase-request.component.ts" />
+    <None Remove="ClientApp\src\app\services\api\purchase-request.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Identity.Mock\Identity.Mock.csproj" />
     <ProjectReference Include="..\Logistics.Data\Logistics.Data.csproj" />
     <ProjectReference Include="..\Logistics.Identity\Logistics.Identity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\authorized-regulation-bin.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\item-category-bin.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\manufacturer-bin.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\priority-bin.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\site-bin.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\user-bin.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\vendor-bin.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\updates\vendor-update.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\adUser.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\routes\property\property.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\purchase.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\request\purchase-request.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\api\purchase-request.service.ts" />
   </ItemGroup>
 
   <ItemGroup>

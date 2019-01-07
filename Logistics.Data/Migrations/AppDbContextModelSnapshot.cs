@@ -15,7 +15,7 @@ namespace Logistics.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -117,6 +117,23 @@ namespace Logistics.Data.Migrations
                     b.ToTable("Attachment");
 
                     b.HasDiscriminator<string>("AttachmentType").HasValue("Base");
+                });
+
+            modelBuilder.Entity("Logistics.Data.AuthorizedRegulation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Reference");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuthorizedRegulation");
                 });
 
             modelBuilder.Entity("Logistics.Data.FundingAccount", b =>
@@ -659,7 +676,7 @@ namespace Logistics.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AuthorizedRegulation");
+                    b.Property<int?>("AuthorizedRegulationId");
 
                     b.Property<DateTime>("DateSubmitted");
 
@@ -670,6 +687,8 @@ namespace Logistics.Data.Migrations
                     b.Property<bool>("IsComplete");
 
                     b.Property<bool>("IsRecurring");
+
+                    b.Property<string>("Justifications");
 
                     b.Property<DateTime>("LastModified");
 
@@ -686,6 +705,8 @@ namespace Logistics.Data.Migrations
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorizedRegulationId");
 
                     b.HasIndex("PriorityId");
 
@@ -707,6 +728,8 @@ namespace Logistics.Data.Migrations
                     b.Property<int?>("ItemGroupId");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("PartNumber");
 
                     b.Property<int>("Quantity");
 
@@ -1278,6 +1301,11 @@ namespace Logistics.Data.Migrations
 
             modelBuilder.Entity("Logistics.Data.Request", b =>
                 {
+                    b.HasOne("Logistics.Data.AuthorizedRegulation", "AuthorizedRegulation")
+                        .WithMany("Requests")
+                        .HasForeignKey("AuthorizedRegulationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Logistics.Data.Priority", "Priority")
                         .WithMany("Requests")
                         .HasForeignKey("PriorityId")

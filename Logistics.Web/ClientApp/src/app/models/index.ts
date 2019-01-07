@@ -35,3 +35,5 @@ export * from './transfer-item';
 export * from './transfer-receipt';
 export * from './user';
 export * from './vendor';
+export * from './adUser';
+export * from './authorizedRegulation';

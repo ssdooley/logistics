@@ -1,0 +1,27 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Vendor Recycle Bin</h2>
+  <div *ngIf="service.deletedVendors$ | async as vendors else loading">
+    <div mat-dialog-content>
+      <div *ngIf="vendors.length > 0" fxLayout="column" fxLayoutAlign="start stretch">
+        <div *ngFor="let v of vendors" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+          <p class="mat-body-strong" fxFlex>{{v.name}}</p>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item (click)="toggleVendorDeleted(v)">
+              <mat-icon>settings_backup_restore</mat-icon> Restore
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <h3 *ngIf="!(vendors.length > 0)">Recycle Bin is Empty</h3>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+    </div>
+  </div>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  </ng-template>
+</div>

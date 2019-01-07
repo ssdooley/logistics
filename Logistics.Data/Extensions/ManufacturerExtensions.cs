@@ -11,7 +11,7 @@ namespace Logistics.Data.Extensions
     {
         public static async Task<List<Manufacturer>> GetManufacturers(this AppDbContext db)
         {
-            var model = await db.Manufacturers
+            var model = await db.Manufacturers.Include("ItemCategory")
                 .Where(x => !x.IsDeleted)
                 .ToListAsync();
 
@@ -20,7 +20,7 @@ namespace Logistics.Data.Extensions
 
         public static async Task<List<Manufacturer>> GetDeletedManufacturers(this AppDbContext db)
         {
-            var model = await db.Manufacturers
+            var model = await db.Manufacturers.Include("ItemCategory")
                 .Where(x => x.IsDeleted)
                 .ToListAsync();
 

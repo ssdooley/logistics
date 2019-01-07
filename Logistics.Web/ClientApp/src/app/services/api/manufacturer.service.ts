@@ -19,6 +19,8 @@ export class ManufacturerService {
     private snacker: SnackerService
   ) { }
 
+  trackManufacturers = (manufacturer: Manufacturer) => manufacturer.id;
+
   getManufacturers = () => this.http.get<Manufacturer[]>('/api/manufacturer/getManufacturers')
     .subscribe(
       data => this.manufacturers.next(data),

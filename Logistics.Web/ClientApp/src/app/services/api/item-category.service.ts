@@ -25,6 +25,8 @@ export class ItemCategoryService {
     private snacker: SnackerService
   ) { }
 
+  trackItemCategories = (itemCategory: ItemCategory) => itemCategory.id;
+
   getItemGroupCategories = () => this.http.get<ItemGroupCategory[]>('/api/itemCategory/getItemGroupCategories')
     .subscribe(
       data => this.itemGroupCategories.next(data),

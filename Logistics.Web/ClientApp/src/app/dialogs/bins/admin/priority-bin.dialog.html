@@ -1,0 +1,27 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Priority Recycle Bin</h2>
+  <div *ngIf="service.deletedPriorities$ | async as priorities else loading">
+    <div mat-dialog-content>
+      <div *ngIf="priorities.length > 0" fxLayout="column" fxLayoutAlign="start stretch">
+        <div *ngFor="let p of priorities" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+          <p class="mat-body-strong" fxFlex>{{p.label}}</p>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item (click)="togglePriorityDeleted(p)">
+              <mat-icon>settings_backup_restore</mat-icon> Restore
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <h3 *ngIf="!(priorities.length > 0)">Recycle Bin is Empty</h3>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+    </div>
+  </div>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  </ng-template>
+</div>

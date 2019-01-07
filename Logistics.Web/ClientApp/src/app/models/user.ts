@@ -15,8 +15,9 @@ import { PropertyCustodian } from './property-custodian';
 import { Request } from './request';
 import { Transfer } from './transfer';
 import { TransferReceipt } from './transfer-receipt';
+import { IFilter } from '../interfaces';
 
-export class User {
+export class User implements IFilter {
   id: number;
   guid: string;
   username: string;
@@ -42,4 +43,8 @@ export class User {
   requests: Request[];
   transfers: Transfer[];
   transferReceipts: TransferReceipt[];
+
+  get filter(): string { return `${this.username}` }
+
+  
 }

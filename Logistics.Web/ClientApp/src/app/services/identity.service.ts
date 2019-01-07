@@ -2,16 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { SnackerService } from './snacker.service';
-import { User } from '../models';
+import { User, ADUser } from '../models';
+import { ContainerDataSource } from '../datasources';
+import { IContainerService } from '../interfaces';
 
 @Injectable()
-export class IdentityService {
+export class IdentityService implements IContainerService<User> {
+  hasDataSource = new BehaviorSubject<boolean>(false);
+  dataSource = new BehaviorSubject<ContainerDataSource<User>>(new ContainerDataSource<User>());
+  get data(): BehaviorSubject<Array<User>> { return this.users }
+
   private currentUser = new BehaviorSubject<User>(null);
   private adminUsers = new BehaviorSubject<User[]>(null);
   private deletedUsers = new BehaviorSubject<User[]>(null);
   private users = new BehaviorSubject<User[]>(null);
   private domainUsers = new BehaviorSubject<User[]>(null);
   private user = new BehaviorSubject<User>(null);
+  private searchUsers = new BehaviorSubject<User[]>(null);
+  private sourceUsers = new BehaviorSubject<User[]>(null);
 
   adminUsers$ = this.adminUsers.asObservable();
   currentUser$ = this.currentUser.asObservable();
@@ -19,11 +27,24 @@ export class IdentityService {
   users$ = this.users.asObservable();
   domainUsers$ = this.domainUsers.asObservable();
   user$ = this.user.asObservable();
+  searchUsers$ = this.searchUsers.asObservable();
+  sourceUsers$ = this.sourceUsers.asObservable();
 
   constructor(
     private http: HttpClient,
     private snacker: SnackerService
   ) { }
+
+  clearSearchUsers = () => this.searchUsers.next(null);
+
+  setContainerSource(dataSource: ContainerDataSource<User>) {
+    this.dataSource.next(dataSource);
+    this.hasDataSource.next(true);
+  }
+
+  setSourceUsers = (data: User[]) => this.sourceUsers.next(data);
+
+  private mapUser = (u): User => Object.assign(new User(), u);
 
   getCurrentUser = () => this.http.get<User>('/api/identity/getCurrentUser')
     .subscribe(
@@ -33,7 +54,7 @@ export class IdentityService {
 
   getUsers = () => this.http.get<User[]>('/api/identity/getUsers')
     .subscribe(
-      data => this.users.next(data),
+      data => this.users.next(data.map(this.mapUser)),
       err => this.snacker.sendErrorMessage(err.error)
     )
 
@@ -57,16 +78,16 @@ export class IdentityService {
 
   findDomainUser = (user: string) => this.http.get<User[]>(`/api/identity/findDomainUser/${user}`)
     .subscribe(
-      data => this.domainUsers.next(data),
+      data => this.searchUsers.next(data.map(this.mapUser)),
       err => this.snacker.sendErrorMessage(err.error)
     )
 
-  addUser = (user: User): Promise<boolean> =>
+  addUser = (user: ADUser): Promise<boolean> =>
     new Promise((resolve) => {
       this.http.post('/api/identity/addUser', user)
         .subscribe(
           () => {
-            this.snacker.sendSuccessMessage(`${user.username} successfully added`);
+            this.snacker.sendSuccessMessage(`${user.displayName} successfully added`);
             resolve(true);
           },
           err => {

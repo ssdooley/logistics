@@ -1,0 +1,27 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Site Recycle Bin</h2>
+  <div *ngIf="service.deletedSites$ | async as sites else loading">
+    <div mat-dialog-content>
+      <div *ngIf="sites.length > 0" fxLayout="column" fxLayoutAlign="start stretch">
+        <div *ngFor="let s of sites" class="background card elevated" fxLayout="row" fxLayoutAlign="start center">
+          <p class="mat-body-strong" fxFlex>{{s.name}}</p>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item (click)="toggleSiteDeleted(s)">
+              <mat-icon>settings_backup_restore</mat-icon> Restore
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <h3 *ngIf="!(sites.length > 0)">Recycle Bin is Empty</h3>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+    </div>
+  </div>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  </ng-template>
+</div>

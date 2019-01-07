@@ -4,6 +4,7 @@ import { ObjectMapService } from './object-map.service';
 import { SidepanelService } from './sidepanel.service';
 import { SnackerService } from './snacker.service';
 import { ThemeService } from './theme.service';
+import { AuthorizedRegulationService } from './api/authorizedRegulation.service'
 
 export const Services = [
   CoreService,
@@ -11,7 +12,8 @@ export const Services = [
   ObjectMapService,
   SidepanelService,
   SnackerService,
-  ThemeService
+  ThemeService,
+  AuthorizedRegulationService
 ];
 
 export * from './core.service';
@@ -26,3 +28,4 @@ export * from './api/manufacturer.service';
 export * from './api/priority.service';
 export * from './api/site.service';
 export * from './api/vendor.service';
+export * from './api/authorizedRegulation.service';
