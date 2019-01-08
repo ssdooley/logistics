@@ -28,6 +28,18 @@ namespace Logistics.Data.Extensions
             return model;
         }
 
+        public static async Task<List<Request>> GetPurchaseRequestByUser(this AppDbContext db, User user)
+        {
+            var model = await db.Requests
+                .Where(x => x.User.Id == user.Id)
+                .Include(x => x.ItemGroups)
+                .Include(x => x.RequestAttachments)
+                .Include(x => x.RequestItems)
+                .ToListAsync();
+
+            return model;
+        }
+
         public static async Task UpdateRequest(this AppDbContext db, Request request)
         {
             if (await request.Validate(db))
@@ -60,6 +72,15 @@ namespace Logistics.Data.Extensions
             }
         }
 
+        public static async Task<List<RequestItem>> GetRequestItems(this AppDbContext db)
+        {
+            var model = await db.RequestItems
+                .ToListAsync();
+
+            return model;
+
+        }
+
         public static async Task AddItems(this AppDbContext db, Request request, RequestItem requestItem)
         {
             if (await request.Validate(db))
@@ -78,6 +99,17 @@ namespace Logistics.Data.Extensions
             i.Cost = item.Cost;
             await db.SaveChangesAsync();
 
+        }
+
+        public static async Task DeleteItem(this AppDbContext db, RequestItem item)
+        {
+            var itemToDelete = await db.RequestItems.FindAsync(item.Id);
+            if (itemToDelete.Request.DateSubmitted.Date < DateTime.Now.Date)
+            {
+                throw new Exception("Item is associated with a Purchase Request and cannot be deleted");
+            }
+            db.RequestItems.Remove(itemToDelete);
+            await db.SaveChangesAsync();
         }
 
         private static async Task<bool> Validate(this Request model, AppDbContext db)
