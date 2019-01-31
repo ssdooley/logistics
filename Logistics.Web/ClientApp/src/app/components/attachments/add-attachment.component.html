@@ -1,0 +1,18 @@
+<mat-toolbar>
+  <span>Add Attachments</span>
+  <section class="toolbar-buttons">
+    <file-upload (selected)="selected.emit($event)"></file-upload>
+    <button mat-button color="accent" (click)="upload.emit()" [disabled]="uploading || !(files && files.length > 0)">Upload</button>
+    <button mat-button (click)="clear.emit()" *ngIf="files && files.length > 0" [disabled]="uploading">Cancel</button> 
+  </section>
+</mat-toolbar>
+<mat-progress-bar *ngIf="uploading" mode="indeterminate" color="accent"></mat-progress-bar>
+<section *ngIf="files && files.length > 0">
+  <mat-toolbar>Pending Uploads</mat-toolbar>
+  <section class="upload-container" fxLayout="row | wrap" fxLayoutAlign="start start">
+    <div class="upload-card background card elevated" *ngFor="let f of files">{{f.name}}</div>
+  </section>
+</section>
+<section *ngIf="!(files && files.length > 0)">
+  <h2>No pending uploads</h2>
+</section>

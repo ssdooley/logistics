@@ -104,6 +104,10 @@ namespace Logistics.Data.Migrations
 
                     b.Property<string>("File");
 
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name");
+
                     b.Property<string>("Path");
 
                     b.Property<string>("Url");
@@ -676,8 +680,6 @@ namespace Logistics.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AuthorizedRegulationId");
-
                     b.Property<DateTime>("DateSubmitted");
 
                     b.Property<Guid>("Guid");
@@ -692,6 +694,8 @@ namespace Logistics.Data.Migrations
 
                     b.Property<DateTime>("LastModified");
 
+                    b.Property<string>("Mission");
+
                     b.Property<int>("PriorityId");
 
                     b.Property<DateTime?>("RenewalDate");
@@ -705,8 +709,6 @@ namespace Logistics.Data.Migrations
                     b.Property<int>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthorizedRegulationId");
 
                     b.HasIndex("PriorityId");
 
@@ -1301,11 +1303,6 @@ namespace Logistics.Data.Migrations
 
             modelBuilder.Entity("Logistics.Data.Request", b =>
                 {
-                    b.HasOne("Logistics.Data.AuthorizedRegulation", "AuthorizedRegulation")
-                        .WithMany("Requests")
-                        .HasForeignKey("AuthorizedRegulationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Logistics.Data.Priority", "Priority")
                         .WithMany("Requests")
                         .HasForeignKey("PriorityId")

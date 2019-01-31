@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20190111204926_Changed-AuthorizedRegulation-from-String-to-List.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="2.1.4" />
     <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.1.4" />
   </ItemGroup>

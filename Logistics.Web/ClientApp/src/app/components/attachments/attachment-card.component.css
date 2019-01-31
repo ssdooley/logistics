@@ -1,0 +1,9 @@
+div.card {
+  padding: 8px;
+  margin: 4px;
+}
+
+div.card a {
+  min-width: 180px;
+  text-align: center;
+}

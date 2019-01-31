@@ -1,0 +1,18 @@
+<div>
+  <h2 fxFlex="90" style="margin-top:-10px;color: red;">Authorized Regulations</h2>
+  <div mat-dialog-options fxLayoutAlign="end start" fxFlex="10" style="margin-top:-10px;">
+    <button mat-button color="accent" (click)="exitJustification()">Close</button>
+  </div>
+</div>
+<div *ngIf="service.authorizedRegulations$ | async as regs else loading">
+  
+  <div mat-dialog-content fxLayout="row" fxLayoutAlign="start start" class="container" *ngFor="let r of regs">
+    <button mat-icon-button color="primary">
+      <mat-icon (click)="addJustification(r)">add</mat-icon>
+    </button>
+    <p>{{r.name}} : {{r.reference}}</p> 
+  </div>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  </ng-template>
+</div>

@@ -1,2 +1,116 @@
-<h1>Purchase Request</h1>
-
+<div>
+  <h1>Purchase Request</h1>
+  <button mat-button color="primary" (click)="addPurchaseRequest()">Save</button>
+</div>
+<div *ngIf="service.requests$ | async as requests else loading">
+  <div *ngIf="priorityService.priorities$ | async as priorities">
+    <div *ngIf="siteService.sites$ | async as sites">
+      <div fxFlex="40" style="border-right: 2px solid black">
+        <div class="container">
+          <div fxLayout="row" class="requestBox">
+            <mat-form-field fxFlex style="margin: -15px 0px -19px 5px;">
+              <input matInput placeholder="Subject" [(ngModel)]="newRequest.subject" />
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-form-field fxFlex class="requestSelect">
+              <mat-select placeholder="Priority" [(ngModel)]="newRequest.priority" name="Priority" class="requestMatSelect">
+                <mat-option fxLayoutAlign="center center" *ngFor="let p of priorities" [value]="p">
+                  <p fxLayoutAlign="center center">{{p.label}}</p>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex class="requestSelect">
+              <mat-select placeholder="Site" [(ngModel)]="newRequest.site" name="Site" class="requestMatSelect">
+                <mat-option fxLayoutAlign="center center" *ngFor="let s of sites" [value]="s">
+                  <p fxLayoutAlign="center center">{{s.name}}</p>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex class="requestSelect">
+              <mat-select placeholder="Mission" [(ngModel)]="selectedMission" name="Mission" class="requestMatSelect" (ngModelChange)="addMission($event)">
+                <mat-option fxLayoutAlign="center center" *ngFor="let m of service.mission" [value]="m">
+                  <p fxLayoutAlign="center center">{{m.name}}</p>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="requestBox">
+            <mat-form-field fxFlex style="margin: -15px 0px -19px 5px;">
+              <textarea matInput [(ngModel)]="newRequest.requirement" placeholder="Requirement"
+                        matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="8"></textarea>
+            </mat-form-field>
+          </div>
+          <div>
+            <div fxFlex>
+              <div fxLayout="row">
+                <p>Authorized Regulation / Justification</p>
+                <button mat-button color="primary" (click)="addJustification()">Add</button>
+              </div>             
+              <div class="requestBox">
+                <mat-form-field fxFlex style="margin: -15px 0px -19px 5px;">
+                  <textarea matInput [(ngModel)]="newRequest.justifications" placeholder="Authorized Regulation / Justification"
+                            matTextareaAutosize matAutosizeMinRows="3" matAutosizeMaxRows="8"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxFlex="60">
+        <div>
+          <div fxLayout="row">
+            <h2>Items to purchase</h2>
+            <button mat-button color="primary" (click)="addItems()">Add</button>
+          </div>
+          <div class="requestBox">
+            <div fxLayout="row">
+              <p fxFlex="8" class="tableHeader table tableShort">Edit</p>
+              <p fxFlex="26" class="tableHeader table tableLong">Part Number</p>
+              <p fxFlex="35" class="tableHeader table tableLong">Item</p>
+              <p fxFlex="14" class="tableHeader table tableShort">Quantity</p>
+              <p fxFlex="17" class="tableHeader table tableShort">Cost</p>
+            </div>
+            <!--<div fxLayout="row" *ngFor="let items of newRequest.requestItems">              
+              <p fxFlex="30" class="tableItem table tableLong">{{items.partNumber}}</p>
+              <p fxFlex="38" class="tableItem table tableLong">{{items.name}}</p>
+              <p fxFlex="15" class="tableItem table tableShort">{{items.quantity}}</p>
+              <p fxFlex="17" class="tableItem table tableShort">{{items.cost}}</p>
+            </div>-->
+            <div fxLayout="row" *ngFor="let items of newRequest.requestItems">
+              <div fxFlex="8">
+                <button mat-icon-button color="warn" (click)="removeItem($event)">
+                  <mat-icon>remove_circle_outline</mat-icon>
+                </button>
+              </div>
+              <mat-form-field fxFlex="26" class="tableItem table tableLong">
+                <input matInput [(ngModel)] = items.partNumber />
+              </mat-form-field>
+              <mat-form-field fxFlex="35" class="tableItem table tableLong">
+                <input matInput [(ngModel)]="items.name" />
+              </mat-form-field>
+              <mat-form-field fxFlex="14" class="tableItem table tableShort">
+                <input matInput [(ngModel)]="items.quantity" />
+              </mat-form-field>
+              <mat-form-field fxFlex="17" class="tableItem table tableShort">
+                <input matInput [(ngModel)]="items.cost" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2>Attachments</h2>
+          <div class="requestBox">
+            <add-attachment (selected)="filesChanged($event)" (upload)="uploadFiles()" (clear)="clearFiles()" [uploading]="uploading" [files]="files"></add-attachment>
+            <section *ngIf="attachmentService.attachments$ | async as attachments">
+              <attachment-list [files]="attachments"></attachment-list>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>

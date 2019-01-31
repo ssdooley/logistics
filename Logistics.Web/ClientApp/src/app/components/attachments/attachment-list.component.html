@@ -1,0 +1,6 @@
+<mat-toolbar>
+  <span>Attachments</span>
+</mat-toolbar>
+<section class="card-container" fxLayout="row | wrap" fxLayoutAlign="start start" *ngIf="files && files.length > 0">
+  <attachment-card *ngFor="let f of files" [file]="f"></attachment-card>
+</section>

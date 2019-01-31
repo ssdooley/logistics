@@ -50,11 +50,11 @@ namespace Logistics.Data.Extensions
                 r.IsRecurring = request.IsRecurring;
                 r.ItemGroups = request.ItemGroups;
                 r.Justifications = request.Justifications;
+                r.Mission = request.Mission;
                 r.LastModified = request.LastModified;
                 r.Priority = request.Priority;
                 r.RenewalDate = request.RenewalDate;
                 r.RequestAttachments = request.RequestAttachments;
-                r.RequestItems = request.RequestItems;
                 r.Requirement = request.Requirement;
                 r.Site = request.Site;
                 r.Subject = request.Subject;
@@ -67,28 +67,45 @@ namespace Logistics.Data.Extensions
         {
             if (await request.Validate(db))
             {
+                request.DateSubmitted = DateTime.Now;
+                request.LastModified = DateTime.Now;
+                request.PriorityId = request.Priority.Id;
+                request.SiteId = request.Site.Id;
+                db.Priorities.Attach(request.Priority);
+                db.Sites.Attach(request.Site);
                 await db.Requests.AddAsync(request);
                 await db.SaveChangesAsync();
+
+                foreach (var item in request.RequestItems)
+                {
+                    await db.AddItems(item, request.Id);
+                }
             }
         }
 
-        public static async Task<List<RequestItem>> GetRequestItems(this AppDbContext db)
+        public static async Task<List<RequestItem>> GetRequestItems(this AppDbContext db, int id)
         {
             var model = await db.RequestItems
+                .Where(x => x.RequestId == id)
                 .ToListAsync();
 
             return model;
 
         }
 
-        public static async Task AddItems(this AppDbContext db, Request request, RequestItem requestItem)
+        public static async Task<RequestItem> GetRequestItem(this AppDbContext db, int id)
         {
-            if (await request.Validate(db))
-            {
-                requestItem.RequestId = request.Id;
-                await db.RequestItems.AddAsync(requestItem);
-                await db.SaveChangesAsync();
-            }
+            var model = await db.RequestItems.FindAsync(id);
+
+            return model;
+
+        }
+
+        public static async Task AddItems(this AppDbContext db, RequestItem requestItem, int requestId = 0)
+        {
+            requestItem.RequestId = requestId > 0 ? requestId : requestItem.Request.Id;
+            db.RequestItems.Attach(requestItem);
+            await db.SaveChangesAsync();            
         }
 
         public static async Task UpdateItems(this AppDbContext db, RequestItem item)
@@ -121,7 +138,7 @@ namespace Logistics.Data.Extensions
 
             var check = model.Id > 0 ?
                 await db.Requests.FirstOrDefaultAsync(x => x.Subject.ToLower() == model.Subject.ToLower() && x.Id == model.Id) :
-                await db.Requests.FirstOrDefaultAsync(x => x.Subject.ToLower() == model.Subject.ToLower() && x.RequestItems == model.RequestItems);
+                await db.Requests.FirstOrDefaultAsync(x => x.Subject.ToLower() == model.Subject.ToLower() && x.UserId == model.UserId);
 
             if (check != null)
             {

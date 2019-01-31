@@ -6,6 +6,7 @@ import { SnackerService } from './snacker.service';
 import { ThemeService } from './theme.service';
 import { AuthorizedRegulationService } from './api/authorizedRegulation.service';
 import { PurchaseRequestService } from './api/purchase-request.service';
+import { AttachmentService } from './attachment.service';
 
 export const Services = [
   CoreService,
@@ -15,7 +16,8 @@ export const Services = [
   SnackerService,
   ThemeService,
   PurchaseRequestService,
-  AuthorizedRegulationService
+  AuthorizedRegulationService,
+  AttachmentService
 ];
 
 export * from './core.service';
@@ -32,3 +34,4 @@ export * from './api/site.service';
 export * from './api/vendor.service';
 export * from './api/authorizedRegulation.service';
 export * from './api/purchase-request.service';
+export * from './attachment.service';

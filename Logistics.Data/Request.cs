@@ -12,7 +12,8 @@ namespace Logistics.Data
         public string Justifications { get; set; }
         public Guid Guid { get; set; }
         public string Subject { get; set; }
-        public string Requirement { get; set; }        
+        public string Requirement { get; set; } 
+        public string Mission { get; set; }
         public DateTime DateSubmitted { get; set; }
         public DateTime LastModified { get; set; }
 
@@ -25,7 +26,7 @@ namespace Logistics.Data
         public Priority Priority { get; set; }
         public Site Site { get; set; }
         public User User { get; set; }
-        public AuthorizedRegulation AuthorizedRegulation { get; set; }
+       
 
         public List<ItemGroup> ItemGroups { get; set; }
         public List<RequestAttachment> RequestAttachments { get; set; }

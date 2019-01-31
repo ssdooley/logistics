@@ -25,6 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\components\attachments\add-attachment.component.ts" />
+    <None Remove="ClientApp\src\app\components\attachments\attachment-card.component.ts" />
+    <None Remove="ClientApp\src\app\components\attachments\attachment-list.component.ts" />
+    <None Remove="ClientApp\src\app\components\attachments\file-upload.component.ts" />
+    <None Remove="ClientApp\src\app\dialogs\attachments\attachments.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\bins\admin\authorized-regulation-bin.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\bins\admin\item-category-bin.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\bins\admin\manufacturer-bin.dialog.ts" />
@@ -32,13 +37,17 @@
     <None Remove="ClientApp\src\app\dialogs\bins\admin\site-bin.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\bins\admin\user-bin.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\bins\admin\vendor-bin.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\justifications\justifications.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\request-items\request-items.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\updates\vendor-update.dialog.ts" />
     <None Remove="ClientApp\src\app\models\adUser.ts" />
+    <None Remove="ClientApp\src\app\models\mission.ts" />
     <None Remove="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
     <None Remove="ClientApp\src\app\routes\property\property.component.ts" />
     <None Remove="ClientApp\src\app\routes\purchase\purchase.component.ts" />
     <None Remove="ClientApp\src\app\routes\purchase\request\purchase-request.component.ts" />
     <None Remove="ClientApp\src\app\services\api\purchase-request.service.ts" />
+    <None Remove="ClientApp\src\app\services\attachment.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +57,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\attachments\add-attachment.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\attachments\attachment-card.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\attachments\attachment-list.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\attachments\file-upload.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\attachments\attachments.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\authorized-regulation-bin.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\item-category-bin.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\manufacturer-bin.dialog.ts" />
@@ -55,13 +69,17 @@
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\site-bin.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\user-bin.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\vendor-bin.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\justifications\justifications.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\request-items\request-items.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\updates\vendor-update.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\adUser.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\mission.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\property\property.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\purchase.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\request\purchase-request.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\purchase-request.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\attachment.service.ts" />
   </ItemGroup>
 
   <ItemGroup>

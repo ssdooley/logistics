@@ -7,25 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var services_1 = require("../../services");
-var models_1 = require("../../models");
 var PurchaseComponent = /** @class */ (function () {
-    function PurchaseComponent(dialog, service) {
-        this.dialog = dialog;
-        this.service = service;
-        this.selectedPriority = new models_1.Priority();
-        this.selectedSite = new models_1.Site();
-        this.selectedMission = ['Red', 'Blue'];
+    function PurchaseComponent() {
     }
-    PurchaseComponent.prototype.ngOnInit = function () {
-        this.service.getPurchaseRequests();
-        this.service.getRequestItems();
-    };
     PurchaseComponent = __decorate([
         core_1.Component({
             selector: 'purchase',
             templateUrl: 'purchase.component.html',
-            providers: [services_1.PurchaseRequestService]
         })
     ], PurchaseComponent);
     return PurchaseComponent;

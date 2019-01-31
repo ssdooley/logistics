@@ -54,9 +54,9 @@ var VendorUpdateDialog = /** @class */ (function () {
         this.service = service;
         this.currentVendor = new models_1.Vendor();
         this.currentVendor = data.vendor;
-        console.log(this.currentVendor.name + " " + this.currentVendor.id);
     }
     VendorUpdateDialog.prototype.ngOnInit = function () {
+        console.log(this.currentVendor.name);
         this.service.getVendor(this.currentVendor.id);
     };
     VendorUpdateDialog.prototype.updateVendor = function (v) {

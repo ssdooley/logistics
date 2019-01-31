@@ -7,13 +7,11 @@ import { User } from './user';
 
 export class Request {
   id: number;
-  priorityId: number;
-  siteId: number;
-  userId: number;
+  justifications: string;
   guid: string;
   subject: string;
   requirement: string;
-  authorizedRegulation: string;
+  mission: string;  
   dateSubmitted: Date;
   lastModified: Date;
   isRecurring: boolean;
@@ -26,4 +24,8 @@ export class Request {
   itemGroups: ItemGroup[];
   requestAttachments: RequestAttachment[];
   requestItems: RequestItem[];
+
+  constructor() {
+    this.requestItems = new Array<RequestItem>();
+  }
 }

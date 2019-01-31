@@ -10,6 +10,8 @@ var sidepanel_service_1 = require("./sidepanel.service");
 var snacker_service_1 = require("./snacker.service");
 var theme_service_1 = require("./theme.service");
 var authorizedRegulation_service_1 = require("./api/authorizedRegulation.service");
+var purchase_request_service_1 = require("./api/purchase-request.service");
+var attachment_service_1 = require("./attachment.service");
 exports.Services = [
     core_service_1.CoreService,
     identity_service_1.IdentityService,
@@ -17,7 +19,9 @@ exports.Services = [
     sidepanel_service_1.SidepanelService,
     snacker_service_1.SnackerService,
     theme_service_1.ThemeService,
-    authorizedRegulation_service_1.AuthorizedRegulationService
+    purchase_request_service_1.PurchaseRequestService,
+    authorizedRegulation_service_1.AuthorizedRegulationService,
+    attachment_service_1.AttachmentService
 ];
 __export(require("./core.service"));
 __export(require("./identity.service"));
@@ -32,4 +36,6 @@ __export(require("./api/priority.service"));
 __export(require("./api/site.service"));
 __export(require("./api/vendor.service"));
 __export(require("./api/authorizedRegulation.service"));
+__export(require("./api/purchase-request.service"));
+__export(require("./attachment.service"));
 //# sourceMappingURL=index.js.map

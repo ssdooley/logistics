@@ -1,0 +1,28 @@
+<div>
+<!--<div *ngIf="service.requests$ | async as requests else loading">-->
+  <h2>Add Request Items Here</h2>
+  <div class="container">
+    <div fxLayout="row" fxLayoutAlign="start start">
+      <mat-form-field>
+        <input matInput placeholder="Part Number" [(ngModel)]="newItem.partNumber" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Item" [(ngModel)]="newItem.name" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Quantity" [(ngModel)]="newItem.quantity" />
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Cost" [(ngModel)]="newItem.cost" />
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button (click)="existRequestItems()">Close</button>
+      <button mat-button (click)="addRequestItem(newItem)">Save</button>
+    </div>
+    <ng-template #loading>
+      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </ng-template>
+  </div>
+</div>

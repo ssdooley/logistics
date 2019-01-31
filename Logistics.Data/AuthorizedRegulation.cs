@@ -9,6 +9,5 @@ namespace Logistics.Data
         public string Reference { get; set; }
         public bool IsDeleted { get; set; }
 
-        public List<Request> Requests { get; set; }
     }
 }

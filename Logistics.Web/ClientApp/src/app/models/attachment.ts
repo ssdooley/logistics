@@ -8,8 +8,10 @@ export class Attachment {
   file: string;
   path: string;
   url: string;
+  name: string;
   attachmentType: string;
   dateUploaded: Date;
+  isDeleted: boolean;
   user: User;
 }
 

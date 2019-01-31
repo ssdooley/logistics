@@ -1,0 +1,2 @@
+<input type="file" (change)="fileChange($event)" #fileInput accept="*/*" [multiple]="allowMultiple" />
+<button mat-button [color]="buttonColor" (click)="fileInput.click()">{{inputLabel}}</button>
