@@ -1,0 +1,1 @@
+{"version":3,"file":"validate-positive-integer.js","sourceRoot":"","sources":["validate-positive-integer.ts"],"names":[],"mappings":";;AAEA,SAAS,mBAAmB,CAAC,CAAc;IACzC,IAAI,kBAAkB,GAAG,YAAY,CAAA;IAErC,OAAO,kBAAkB,CAAC,IAAI,CAAC,CAAC,CAAC,KAAK,CAAC,CAAC,CAAC,CAAC,IAAI,CAAC,CAAC,CAAC;QAC/C,mBAAmB,EAAE;YACnB,KAAK,EAAE,KAAK;SACb;KACF,CAAC;AACJ,CAAC"}

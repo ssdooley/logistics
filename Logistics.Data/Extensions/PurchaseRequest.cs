@@ -28,6 +28,7 @@ namespace Logistics.Data.Extensions
             return model;
         }
 
+
         public static async Task<List<Request>> GetPurchaseRequestByUser(this AppDbContext db, User user)
         {
             var model = await db.Requests
@@ -63,7 +64,7 @@ namespace Logistics.Data.Extensions
             }
         }
 
-        public static async Task AddRequest(this AppDbContext db, Request request)
+        public static async Task<int> AddRequest(this AppDbContext db, Request request)
         {
             if (await request.Validate(db))
             {
@@ -73,14 +74,20 @@ namespace Logistics.Data.Extensions
                 request.SiteId = request.Site.Id;
                 db.Priorities.Attach(request.Priority);
                 db.Sites.Attach(request.Site);
+
+
                 await db.Requests.AddAsync(request);
-                await db.SaveChangesAsync();
+                await db.SaveChangesAsync();                              
 
                 foreach (var item in request.RequestItems)
                 {
                     await db.AddItems(item, request.Id);
                 }
+
+                return request.Id;
             }
+
+            throw new Exception("Invalid request");
         }
 
         public static async Task<List<RequestItem>> GetRequestItems(this AppDbContext db, int id)
@@ -135,6 +142,31 @@ namespace Logistics.Data.Extensions
             {
                 throw new Exception("Subject must be filled in");
             }
+
+            if (model.Priority == null)
+            {
+                throw new Exception("Priority must be selected");
+            }
+
+            if (model.Site == null)
+            {
+                throw new Exception("Please select a Site");
+            }
+
+            if (string.IsNullOrEmpty(model.Mission))
+            {
+                throw new Exception("Please select a Mission");
+            }
+
+            if (string.IsNullOrEmpty(model.Requirement))
+            {
+                throw new Exception("Please provide information for your Requirements");
+            }
+
+            if (string.IsNullOrEmpty(model.Justifications))
+            {
+                throw new Exception("Justifications are Required");
+            }                                  
 
             var check = model.Id > 0 ?
                 await db.Requests.FirstOrDefaultAsync(x => x.Subject.ToLower() == model.Subject.ToLower() && x.Id == model.Id) :

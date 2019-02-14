@@ -40,8 +40,8 @@ namespace Logistics.Web.Controllers
             await db.UploadOrderAttachments(files, manager.CurrentUser, orderId);
         }
 
-        [HttpPost("[action]")]
-        public async Task UploadRequestAttachments([FromRoute]int requestId)
+        [HttpPost("[action]/{id}")]
+        public async Task UploadRequestAttachments([FromRoute]int id)
         {
             var files = Request.Form.Files;
 
@@ -50,7 +50,7 @@ namespace Logistics.Web.Controllers
                 throw new Exception("No files provided for upload");
             }
 
-            await db.UploadRequestAttachments(files, manager.CurrentUser, requestId);
+            await db.UploadRequestAttachments(files, manager.CurrentUser, id);
         }
 
         [HttpPost("[action]")]

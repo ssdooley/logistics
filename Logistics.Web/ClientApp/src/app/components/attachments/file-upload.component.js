@@ -12,17 +12,15 @@ var FileUploadComponent = /** @class */ (function () {
         this.allowMultiple = true;
         this.buttonColor = 'primary';
         this.inputLabel = 'Browse...';
-        this.selected = new core_1.EventEmitter();
+        this.onSelected = new core_1.EventEmitter();
     }
     FileUploadComponent.prototype.fileChange = function (event) {
         var files = event.target.files;
-        var fileList = new Array();
         var formData = new FormData();
         for (var i = 0; i < files.length; i++) {
             formData.append(files.item(i).name, files.item(i));
-            fileList.push(files.item(i));
         }
-        this.selected.emit([fileList, formData]);
+        this.onSelected.emit([files, formData]);
         this.fileInput.nativeElement.value = null;
     };
     __decorate([
@@ -39,7 +37,7 @@ var FileUploadComponent = /** @class */ (function () {
     ], FileUploadComponent.prototype, "inputLabel", void 0);
     __decorate([
         core_1.Output()
-    ], FileUploadComponent.prototype, "selected", void 0);
+    ], FileUploadComponent.prototype, "onSelected", void 0);
     FileUploadComponent = __decorate([
         core_1.Component({
             selector: 'file-upload',

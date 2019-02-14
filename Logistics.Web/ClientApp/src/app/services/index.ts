@@ -7,6 +7,8 @@ import { ThemeService } from './theme.service';
 import { AuthorizedRegulationService } from './api/authorizedRegulation.service';
 import { PurchaseRequestService } from './api/purchase-request.service';
 import { AttachmentService } from './attachment.service';
+import { FormService } from './api/form';
+import { CustomValidators } from './api/custom-validators';
 
 export const Services = [
   CoreService,
@@ -17,7 +19,9 @@ export const Services = [
   ThemeService,
   PurchaseRequestService,
   AuthorizedRegulationService,
-  AttachmentService
+  AttachmentService,
+  FormService,
+  CustomValidators
 ];
 
 export * from './core.service';
@@ -35,3 +39,5 @@ export * from './api/vendor.service';
 export * from './api/authorizedRegulation.service';
 export * from './api/purchase-request.service';
 export * from './attachment.service';
+export * from './api/form';
+export * from './api/custom-validators';

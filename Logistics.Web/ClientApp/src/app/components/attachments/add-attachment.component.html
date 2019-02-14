@@ -2,7 +2,7 @@
   <span>Add Attachments</span>
   <section class="toolbar-buttons">
     <file-upload (selected)="selected.emit($event)"></file-upload>
-    <button mat-button color="accent" (click)="upload.emit()" [disabled]="uploading || !(files && files.length > 0)">Upload</button>
+    <!--<button mat-button color="accent" (click)="upload.emit()" [disabled]="uploading || !(files && files.length > 0)">Upload</button>-->
     <button mat-button (click)="clear.emit()" *ngIf="files && files.length > 0" [disabled]="uploading">Cancel</button> 
   </section>
 </mat-toolbar>

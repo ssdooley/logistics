@@ -11,6 +11,18 @@ var attachment_1 = require("../../models/attachment");
 var AttachmentCardComponent = /** @class */ (function () {
     function AttachmentCardComponent() {
         this.file = new attachment_1.Attachment();
+        //fileChange(event) {
+        //  console.log("from attachment card");
+        //  let fileList: FileList = event.target.files;
+        //  if (fileList.length > 0) {
+        //    let file: File = fileList[0];
+        //    let fileSize: number = fileList[0].size;
+        //    if (fileSize <= 10485760) {
+        //      let formData: FormData = new FormData();
+        //      formData.get(file.name);
+        //    }
+        //  }
+        //}
     }
     __decorate([
         core_1.Input()

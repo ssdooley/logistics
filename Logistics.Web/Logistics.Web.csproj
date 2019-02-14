@@ -40,13 +40,17 @@
     <None Remove="ClientApp\src\app\dialogs\justifications\justifications.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\request-items\request-items.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\updates\vendor-update.dialog.ts" />
+    <None Remove="ClientApp\src\app\interfaces\get-form-validation-errors.ts" />
     <None Remove="ClientApp\src\app\models\adUser.ts" />
     <None Remove="ClientApp\src\app\models\mission.ts" />
     <None Remove="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
     <None Remove="ClientApp\src\app\routes\property\property.component.ts" />
     <None Remove="ClientApp\src\app\routes\purchase\purchase.component.ts" />
     <None Remove="ClientApp\src\app\routes\purchase\request\purchase-request.component.ts" />
+    <None Remove="ClientApp\src\app\services\api\custom-validators.ts" />
+    <None Remove="ClientApp\src\app\services\api\form.ts" />
     <None Remove="ClientApp\src\app\services\api\purchase-request.service.ts" />
+    <None Remove="ClientApp\src\app\services\api\validate-positive-integer.ts" />
     <None Remove="ClientApp\src\app\services\attachment.service.ts" />
   </ItemGroup>
 
@@ -72,13 +76,17 @@
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\justifications\justifications.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\request-items\request-items.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\updates\vendor-update.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\interfaces\get-form-validation-errors.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\adUser.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\mission.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\property\property.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\purchase.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\request\purchase-request.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\api\custom-validators.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\api\form.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\purchase-request.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\api\validate-positive-integer.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\attachment.service.ts" />
   </ItemGroup>
 
@@ -112,5 +120,21 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
 
 </Project>

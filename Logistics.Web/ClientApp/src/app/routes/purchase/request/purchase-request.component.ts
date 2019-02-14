@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PurchaseRequestService, PriorityService, SiteService, AuthorizedRegulationService, AttachmentService } from '../../../services';
+import { SnackerService, PurchaseRequestService, PriorityService, SiteService, AuthorizedRegulationService, AttachmentService } from '../../../services';
 
 import { MatDialog } from '@angular/material';
 import { Request, RequestItem, RequestAttachment, AuthorizedRegulation, Site, Priority } from '../../../models';
@@ -28,6 +28,7 @@ export class PurchaseRequestComponent implements OnInit {
   formData: FormData;
   files: File[];
   uploading = false;
+  fileNameArray: Array<string>;
 
   constructor(
     public dialog: MatDialog,
@@ -35,7 +36,8 @@ export class PurchaseRequestComponent implements OnInit {
     public priorityService: PriorityService,
     public siteService: SiteService,
     public regulationService: AuthorizedRegulationService,
-    public attachmentService: AttachmentService
+    public attachmentService: AttachmentService,
+    public snacker: SnackerService
   ) { }
 
   ngOnInit() {
@@ -46,9 +48,8 @@ export class PurchaseRequestComponent implements OnInit {
     this.attachmentService.getAttachments();
   }
 
-  addPurchaseRequest() {
-    
-    this.service.addPurchaseRequest(this.newRequest);    
+  addPurchaseRequest(formData: FormData) {    
+    this.service.addPurchaseRequest(this.newRequest, formData);    
   }
 
   addMission(event) {
@@ -94,27 +95,43 @@ export class PurchaseRequestComponent implements OnInit {
       });
   }
 
-  removeItem($event) {
-    this.newRequest.requestItems.splice($event)
-    console.log($event);
+  removeItem(item: RequestItem) {
+    //this.newRequest.requestItems.splice(item);
+    console.log(item);
+    let index = this.newRequest.requestItems.indexOf(item);
+    console.log(index);
+    this.newRequest.requestItems.splice(index, 1);
   }
 
-  filesChanged(data: [File[], FormData]) {
-    this.files = data[0];
-    this.formData = data[1];
+  fileChange(files: [FileList, FormData]) {
+    const fileNames = new Array<string>();
+    
+    if (this.service.fileNames.value.length > 0 && files[0].length == 1) {
+      this.snacker.sendErrorMessage("If you wish to upload multiple files, they must be selected at the same time");
+    }
+    if (files[0].length > 1 && this.service.fileNames.value.length > 0
+    || this.service.fileNames.value.length == 0) {
+      for (let i = 0; i < files[0].length; i++) {
+        fileNames.push(files[0].item(i).name);
+        console.log(files[0]);
+      }
+      this.service.fileNames.next(fileNames);
+      this.service.files.next(files[1]);
+    }    
   }
 
-  //uploadFiles()  {
-  //  if ((this.files && this.files.length > 0) && this.formData) {
-  //    this.uploading = true;
-  //    const res = this.attachmentService.uploadRequestAttachments(this.newRequest.id, this.formData);
-  //    console.log(this.formData);
-  //    this.uploading = false;
-  //    if (res) {
-  //      this.clearFiles();
-  //    }
-  //  }
-  //}
+  uploadFiles()  {
+    if ((this.files && this.files.length > 0) && this.formData) {
+      this.uploading = true;
+      const res = this.attachmentService.uploadRequestAttachments(this.newRequest.id, this.formData);
+      console.log(this.formData);
+      this.uploading = false;
+      if (res) {
+        this.clearFiles();
+      }
+    }
+  }
+  
 
   clearFiles() {
     this.files = null;

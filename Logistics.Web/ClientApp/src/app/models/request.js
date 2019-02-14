@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Request = /** @class */ (function () {
     function Request() {
         this.requestItems = new Array();
+        this.requestAttachments = new Array();
     }
     return Request;
 }());

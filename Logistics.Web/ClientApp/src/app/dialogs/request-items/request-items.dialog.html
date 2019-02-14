@@ -1,28 +1,41 @@
 <div>
 <!--<div *ngIf="service.requests$ | async as requests else loading">-->
   <h2>Add Request Items Here</h2>
-  <div class="container">
-    <div fxLayout="row" fxLayoutAlign="start start">
-      <mat-form-field>
-        <input matInput placeholder="Part Number" [(ngModel)]="newItem.partNumber" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Item" [(ngModel)]="newItem.name" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Quantity" [(ngModel)]="newItem.quantity" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Cost" [(ngModel)]="newItem.cost" />
-      </mat-form-field>
-    </div>
-
-    <div mat-dialog-actions>
-      <button mat-button (click)="existRequestItems()">Close</button>
-      <button mat-button (click)="addRequestItem(newItem)">Save</button>
-    </div>
-    <ng-template #loading>
-      <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
-    </ng-template>
-  </div>
+  <form [formGroup]="itemsForm" class="form" novalidate>    
+      <div class="container">
+        <div fxLayout="row" fxLayoutAlign="start start">
+          <div>
+            <mat-form-field>
+              <input name="partNumber" matInput formControlName="partNumber" placeholder="Part Number" type="partNumber" />
+              <mat-error *ngIf="formErrors.partNumber" class="form_error">{{formErrors.partNumber}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input name="name" matInput formControlName="name" placeholder="Item Description" type="name" />
+              <mat-error *ngIf="formErrors.name" class="form_error">{{formErrors.name}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input name="qnty" matInput formControlName="qnty" placeholder="Quantity" type="qnty" />
+              <mat-error *ngIf="formErrors.qnty" class="form_error">{{formErrors.qnty}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input name="cost" matInput formControlName="cost" placeholder="Cost" type="cost" />
+              <mat-error *ngIf="formErrors.cost" class="form_error">{{formErrors.cost}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div mat-dialog-actions>          
+          <button mat-button (click)="existRequestItems()">Close</button>
+          <button mat-button (click)="addRequestItem(itemsForm.value)">Save</button>
+        </div>
+        <ng-template #loading>
+          <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+        </ng-template>
+      </div>
+    </form>
 </div>

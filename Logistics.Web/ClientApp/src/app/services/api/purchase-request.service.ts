@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackerService } from '../snacker.service';
 
-import { Request, RequestAttachment, RequestItem, User, Mission } from '../../models';
+import { Request, RequestAttachment, RequestItem, User, Mission, Attachment } from '../../models';
 import { CoreService } from '../core.service';
 
 @Injectable()
@@ -12,7 +12,11 @@ export class PurchaseRequestService {
   private requestItems = new BehaviorSubject<RequestItem[]>(null);
   private missions = new BehaviorSubject<Mission[]>(null);
   private requestItem = new BehaviorSubject<RequestItem>(null);
+  deletedAttachments = new BehaviorSubject<Array<Attachment>>([]);
+  uploading = new BehaviorSubject<boolean>(false);
   files = new BehaviorSubject<FormData>(new FormData());
+  fileNames = new BehaviorSubject<Array<string>>([]);
+  requestId: number;
 
   requests$ = this.requests.asObservable();
   requestItems$ = this.requestItems.asObservable();
@@ -42,15 +46,15 @@ export class PurchaseRequestService {
       data => this.requests.next(data),
       err => this.snacker.sendErrorMessage(err.error)
   )
-      
 
-  addPurchaseRequest = (request: Request): Promise<boolean> =>
+  addPurchaseRequest = (request: Request, formData: FormData): Promise<boolean> =>
     new Promise((resolve) => {
       this.http.post('/api/purchaseRequest/AddPurchaseRequest', request)
         .subscribe(
-        () => {
-        //(id: number) => {
-           // this.uploadAttachments(id, formData)
+        (id: number) => {
+          
+          console.log(id);
+            this.uploadAttachments(id, formData)
             this.snacker.sendSuccessMessage(`${request.subject} succussfully added`);
             resolve(true);
           },
@@ -59,6 +63,15 @@ export class PurchaseRequestService {
             resolve(false);
           });
     })
+
+  //addPurchaseRequest(request: Request, formData: FormData): Observable<Request> {   
+  //  return this.http.post('/api/purchaseRequest/AddPurchaseRequest', request)
+  //    .
+  //    .subscribe(data => {
+  //      console.log(`This is from the database : ${ data }`);
+  //    });
+      
+  //}
 
   updatePurchaseRequest = (request: Request): Promise<boolean> =>
     new Promise((resolve) => {
@@ -78,12 +91,12 @@ export class PurchaseRequestService {
     .subscribe(
       data => this.requestItems.next(data),
       err => this.snacker.sendErrorMessage(err.error)
-  )
+    )
 
   getRequestItem = (id: number) => this.http.get<RequestItem>(`/api/purchaseRequest/GetRequestItem/${id}`)
     .subscribe(
-    data => this.requestItem.next(data),
-    err => this.snacker.sendErrorMessage(err.error)
+      data => this.requestItem.next(data),
+      err => this.snacker.sendErrorMessage(err.error)
     )
 
   addItems = (request: Request, item: RequestItem): Promise<boolean> =>
@@ -131,7 +144,8 @@ export class PurchaseRequestService {
 
   uploadAttachments(requestId: number, formData: FormData) {
     console.log('from uploadAttachments ' + requestId + " : " + formData)
-    this.http.post('api/attachment/uploadRequestAttachments' + requestId, formData, { headers: this.core.getUploadOptions() })
+    
+    this.http.post('api/attachment/uploadRequestAttachments/' + requestId, formData, { headers: this.core.getUploadOptions() })
       .subscribe(
         () => {
           this.snacker.sendSuccessMessage('Request successfully submitted');
@@ -142,4 +156,10 @@ export class PurchaseRequestService {
         }
       )
   }
+
+  getDeletedAttachments = (id: number) => this.http.get<Array<Attachment>>(`/api/attachment/GetDeletedAttachments/${id}`)
+    .subscribe(
+      data => this.deletedAttachments.next(data),
+      err => this.snacker.sendErrorMessage(err.error)
+    )
 }

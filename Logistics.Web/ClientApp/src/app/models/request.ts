@@ -27,5 +27,6 @@ export class Request {
 
   constructor() {
     this.requestItems = new Array<RequestItem>();
+    this.requestAttachments = new Array<RequestAttachment>();
   }
 }

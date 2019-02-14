@@ -1,6 +1,6 @@
 <div>
   <h1>Purchase Request</h1>
-  <button mat-button color="primary" (click)="addPurchaseRequest()">Save</button>
+  <button mat-button color="primary" (click)="addPurchaseRequest($event)">Save</button>
 </div>
 <div *ngIf="service.requests$ | async as requests else loading">
   <div *ngIf="priorityService.priorities$ | async as priorities">
@@ -46,7 +46,7 @@
               <div fxLayout="row">
                 <p>Authorized Regulation / Justification</p>
                 <button mat-button color="primary" (click)="addJustification()">Add</button>
-              </div>             
+              </div>
               <div class="requestBox">
                 <mat-form-field fxFlex style="margin: -15px 0px -19px 5px;">
                   <textarea matInput [(ngModel)]="newRequest.justifications" placeholder="Authorized Regulation / Justification"
@@ -65,26 +65,20 @@
           </div>
           <div class="requestBox">
             <div fxLayout="row">
-              <p fxFlex="8" class="tableHeader table tableShort">Edit</p>
+              <p fxFlex="8" class="tableHeader table tableShort">Delete</p>
               <p fxFlex="26" class="tableHeader table tableLong">Part Number</p>
               <p fxFlex="35" class="tableHeader table tableLong">Item</p>
               <p fxFlex="14" class="tableHeader table tableShort">Quantity</p>
               <p fxFlex="17" class="tableHeader table tableShort">Cost</p>
             </div>
-            <!--<div fxLayout="row" *ngFor="let items of newRequest.requestItems">              
-              <p fxFlex="30" class="tableItem table tableLong">{{items.partNumber}}</p>
-              <p fxFlex="38" class="tableItem table tableLong">{{items.name}}</p>
-              <p fxFlex="15" class="tableItem table tableShort">{{items.quantity}}</p>
-              <p fxFlex="17" class="tableItem table tableShort">{{items.cost}}</p>
-            </div>-->
             <div fxLayout="row" *ngFor="let items of newRequest.requestItems">
               <div fxFlex="8">
-                <button mat-icon-button color="warn" (click)="removeItem($event)">
+                <button mat-icon-button color="warn" (click)="removeItem(items)">
                   <mat-icon>remove_circle_outline</mat-icon>
                 </button>
               </div>
               <mat-form-field fxFlex="26" class="tableItem table tableLong">
-                <input matInput [(ngModel)] = items.partNumber />
+                <input matInput [(ngModel)]=items.partNumber />
               </mat-form-field>
               <mat-form-field fxFlex="35" class="tableItem table tableLong">
                 <input matInput [(ngModel)]="items.name" />
@@ -99,13 +93,46 @@
           </div>
         </div>
         <div>
-          <h2>Attachments</h2>
-          <div class="requestBox">
-            <add-attachment (selected)="filesChanged($event)" (upload)="uploadFiles()" (clear)="clearFiles()" [uploading]="uploading" [files]="files"></add-attachment>
-            <section *ngIf="attachmentService.attachments$ | async as attachments">
-              <attachment-list [files]="attachments"></attachment-list>
-            </section>
+          <mat-toolbar>
+            <file-upload (onSelected)="fileChange($event)"></file-upload>
+            <button mat-button color="primary" (click)="service.addAttachments()" *ngIf="requests.id > 0"
+                    [disabled]="!(service.fileNames)">
+              Upload
+            </button>
+            <button mat-button color="warn" (click)="service.clearUploads()" [disabled]="!(service.filesNames)">
+              Cancel
+            </button>
+          </mat-toolbar>
+          <div *ngIf="service.fileNames.value.length > 0" class="upload-container">
+            <section class="upload-card mat-elevation-z2 card" *ngFor="let file of service.fileNames | async">
+              <p>{{file}}</p>
+            </section>            
           </div>
+          <!--<div *ngIf="service.requests.attachments.length > 0">-->
+            <!--<mat-toolbar color="primary">
+              <span>Attachments</span>
+              <button mat-button *ngIf="service.request.value.id > 0 && service.deletedAttachments.value.length > 0" (click)="showAttachmentsBing()">
+                <mat-icon>delete</mat-icon> Recycle Bin
+              </button>
+            </mat-toolbar>-->
+            <!--<div class="attachment-container">
+              <section class="attachment-card mat-elevation-z2 card" *ngFor="let attachment of service.request.value.attachments">
+                <button mat-icon-button (click)="service.toggleAttachmentDeleted(attachment)" color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </section>
+            </div>-->
+
+
+
+            <!--<h2>Attachments</h2>
+            <div class="requestBox">
+              <add-attachment (selected)="filesChanged($event)" (upload)="uploadFiles()" (clear)="clearFiles()" [uploading]="uploading" [files]="files"></add-attachment>
+              <section *ngIf="attachmentService.attachments$ | async as attachments">
+                <attachment-list [files]="attachments"></attachment-list>
+              </section>
+            </div>-->
+          <!--</div>-->
         </div>
       </div>
     </div>

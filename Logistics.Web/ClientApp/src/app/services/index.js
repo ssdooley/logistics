@@ -12,6 +12,8 @@ var theme_service_1 = require("./theme.service");
 var authorizedRegulation_service_1 = require("./api/authorizedRegulation.service");
 var purchase_request_service_1 = require("./api/purchase-request.service");
 var attachment_service_1 = require("./attachment.service");
+var form_1 = require("./api/form");
+var custom_validators_1 = require("./api/custom-validators");
 exports.Services = [
     core_service_1.CoreService,
     identity_service_1.IdentityService,
@@ -21,7 +23,9 @@ exports.Services = [
     theme_service_1.ThemeService,
     purchase_request_service_1.PurchaseRequestService,
     authorizedRegulation_service_1.AuthorizedRegulationService,
-    attachment_service_1.AttachmentService
+    attachment_service_1.AttachmentService,
+    form_1.FormService,
+    custom_validators_1.CustomValidators
 ];
 __export(require("./core.service"));
 __export(require("./identity.service"));
@@ -38,4 +42,6 @@ __export(require("./api/vendor.service"));
 __export(require("./api/authorizedRegulation.service"));
 __export(require("./api/purchase-request.service"));
 __export(require("./attachment.service"));
+__export(require("./api/form"));
+__export(require("./api/custom-validators"));
 //# sourceMappingURL=index.js.map

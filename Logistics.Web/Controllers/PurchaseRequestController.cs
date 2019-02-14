@@ -34,10 +34,12 @@ namespace Logistics.Web.Controllers
         public async Task UpdatePurchaseRequest([FromBody]Request request) => await db.UpdateRequest(request);
 
         [HttpPost("[action]")]
-        public async Task AddPurchaseRequest([FromBody]Request request)
+        public async Task<int> AddPurchaseRequest([FromBody]Request model)
         {
-            request.User = manager.CurrentUser;
-            await db.AddRequest(request);
+            model.User = manager.CurrentUser;
+            var id = await db.AddRequest(model);
+            var request = await db.GetPurchaseRequest(id);
+            return id;
         }
         [HttpPost("[action]/{id}")]
         public async Task GetRequestItems([FromRoute]int id) => await db.GetRequestItems(id);

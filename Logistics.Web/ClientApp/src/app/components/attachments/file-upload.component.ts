@@ -10,19 +10,17 @@ export class FileUploadComponent {
   @Input() allowMultiple = true;
   @Input() buttonColor = 'primary';
   @Input() inputLabel = 'Browse...';
-  @Output() selected = new EventEmitter<[File[], FormData]>();
+  @Output() onSelected = new EventEmitter<[FileList, FormData]>();
 
   fileChange(event) {
     const files: FileList = event.target.files;
-    const fileList = new Array<File>();
     const formData = new FormData();
 
     for (let i = 0; i < files.length; i++) {
       formData.append(files.item(i).name, files.item(i));
-      fileList.push(files.item(i));
     }
 
-    this.selected.emit([fileList, formData]);
+    this.onSelected.emit([files, formData]);    
     this.fileInput.nativeElement.value = null;
   }
 }

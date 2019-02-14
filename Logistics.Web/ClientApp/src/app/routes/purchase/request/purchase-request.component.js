@@ -11,13 +11,14 @@ var services_1 = require("../../../services");
 var models_1 = require("../../../models");
 var dialogs_1 = require("../../../dialogs");
 var PurchaseRequestComponent = /** @class */ (function () {
-    function PurchaseRequestComponent(dialog, service, priorityService, siteService, regulationService, attachmentService) {
+    function PurchaseRequestComponent(dialog, service, priorityService, siteService, regulationService, attachmentService, snacker) {
         this.dialog = dialog;
         this.service = service;
         this.priorityService = priorityService;
         this.siteService = siteService;
         this.regulationService = regulationService;
         this.attachmentService = attachmentService;
+        this.snacker = snacker;
         this.selectedPriority = new models_1.Priority();
         this.selectedSite = new models_1.Site();
         this.itemsArray = new Array();
@@ -32,8 +33,8 @@ var PurchaseRequestComponent = /** @class */ (function () {
         this.regulationService.getAuthorizedRegulations();
         this.attachmentService.getAttachments();
     };
-    PurchaseRequestComponent.prototype.addPurchaseRequest = function () {
-        this.service.addPurchaseRequest(this.newRequest);
+    PurchaseRequestComponent.prototype.addPurchaseRequest = function (formData) {
+        this.service.addPurchaseRequest(this.newRequest, formData);
     };
     PurchaseRequestComponent.prototype.addMission = function (event) {
         this.newRequest.mission = event.name;
@@ -76,25 +77,39 @@ var PurchaseRequestComponent = /** @class */ (function () {
             }
         });
     };
-    PurchaseRequestComponent.prototype.removeItem = function ($event) {
-        this.newRequest.requestItems.splice($event);
-        console.log($event);
+    PurchaseRequestComponent.prototype.removeItem = function (item) {
+        //this.newRequest.requestItems.splice(item);
+        console.log(item);
+        var index = this.newRequest.requestItems.indexOf(item);
+        console.log(index);
+        this.newRequest.requestItems.splice(index, 1);
     };
-    PurchaseRequestComponent.prototype.filesChanged = function (data) {
-        this.files = data[0];
-        this.formData = data[1];
+    PurchaseRequestComponent.prototype.fileChange = function (files) {
+        var fileNames = new Array();
+        if (this.service.fileNames.value.length > 0 && files[0].length == 1) {
+            this.snacker.sendErrorMessage("If you wish to upload multiple files, they must be selected at the same time");
+        }
+        if (files[0].length > 1 && this.service.fileNames.value.length > 0
+            || this.service.fileNames.value.length == 0) {
+            for (var i = 0; i < files[0].length; i++) {
+                fileNames.push(files[0].item(i).name);
+                console.log(files[0]);
+            }
+            this.service.fileNames.next(fileNames);
+            this.service.files.next(files[1]);
+        }
     };
-    //uploadFiles()  {
-    //  if ((this.files && this.files.length > 0) && this.formData) {
-    //    this.uploading = true;
-    //    const res = this.attachmentService.uploadRequestAttachments(this.newRequest.id, this.formData);
-    //    console.log(this.formData);
-    //    this.uploading = false;
-    //    if (res) {
-    //      this.clearFiles();
-    //    }
-    //  }
-    //}
+    PurchaseRequestComponent.prototype.uploadFiles = function () {
+        if ((this.files && this.files.length > 0) && this.formData) {
+            this.uploading = true;
+            var res = this.attachmentService.uploadRequestAttachments(this.newRequest.id, this.formData);
+            console.log(this.formData);
+            this.uploading = false;
+            if (res) {
+                this.clearFiles();
+            }
+        }
+    };
     PurchaseRequestComponent.prototype.clearFiles = function () {
         this.files = null;
         this.formData = null;
