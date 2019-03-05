@@ -1,0 +1,149 @@
+<div class="myBody">
+  <div>
+    <h1>Purchase Request</h1>
+    <div class="pageHeader">
+      <button mat-button color="primary" (click)="addPurchaseRequest($event)">Save</button>
+      <button mat-button color="warn" (click)="service.exportRequests()">Export</button>
+    </div>
+  </div>
+  <div *ngIf="service.requests$ | async as requests else loading">
+    <div *ngIf="priorityService.priorities$ | async as priorities">
+      <div *ngIf="siteService.sites$ | async as sites">
+        <div fxFlex="50" style="border-right: 2px solid black" class="leftBody">
+          <div class="container">
+            <div fxLayout="row" class="requestBox">
+              <mat-form-field fxFlex style="margin: -15px 0px -19px 5px;">
+                <input matInput placeholder="Subject" [(ngModel)]="newRequest.subject" />
+              </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <mat-form-field fxFlex class="requestSelect">
+                <mat-select placeholder="Priority" [(ngModel)]="newRequest.priority" name="Priority" class="requestMatSelect">
+                  <mat-option fxLayoutAlign="center center" *ngFor="let p of priorities" [value]="p">
+                    <p fxLayoutAlign="center center">{{p.label}}</p>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field fxFlex class="requestSelect">
+                <mat-select placeholder="Site" [(ngModel)]="newRequest.site" name="Site" class="requestMatSelect">
+                  <mat-option fxLayoutAlign="center center" *ngFor="let s of sites" [value]="s">
+                    <p fxLayoutAlign="center center">{{s.name}}</p>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field fxFlex class="requestSelect">
+                <mat-select placeholder="Mission" [(ngModel)]="selectedMission" name="Mission" class="requestMatSelect" (ngModelChange)="addMission($event)">
+                  <mat-option fxLayoutAlign="center center" *ngFor="let m of service.mission" [value]="m">
+                    <p fxLayoutAlign="center center">{{m.name}}</p>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="requestBox">
+              <mat-form-field fxFlex style="margin: -15px 0px -19px 5px;">
+                <textarea matInput [(ngModel)]="newRequest.requirement" placeholder="Requirement"
+                          matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="8"></textarea>
+              </mat-form-field>
+            </div>
+            <div>
+              <div fxFlex>
+                <div fxLayout="row">
+                  <p>Authorized Regulation / Justification</p>
+                  <button mat-button color="primary" (click)="addJustification()">Add</button>
+                </div>
+                <div class="requestBox">
+                  <mat-form-field fxFlex style="margin: -15px 0px -19px 5px;">
+                    <textarea matInput [(ngModel)]="newRequest.justifications" placeholder="Authorized Regulation / Justification"
+                              matTextareaAutosize matAutosizeMinRows="3" matAutosizeMaxRows="8"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxFlex="50" class="rightBody">
+          <div>
+            <div fxLayout="row">
+              <h2>Items</h2>
+              <button mat-button color="primary" (click)="addItems()">Add</button>
+            </div>
+            <div class="requestBox">
+              <div fxLayout="row">
+                <p class="tableHeader table editTable"></p>
+                <p fxFlex class="tableHeader table tableLong">Part Number</p>
+                <p fxFlex class="tableHeader table tableLong">Item</p>
+                <p fxFlex class="tableHeader table tableShort">Quantity</p>
+                <p fxFlex class="tableHeader table tableShort">Cost</p>
+              </div>
+              <!--<div fxLayout="row">
+                <p fxFlex="8" class="tableHeader table tableShort"></p>
+                <p fxFlex="26" class="tableHeader table tableLong">Part Number</p>
+                <p fxFlex="34" class="tableHeader table tableLong">Item</p>
+                <p fxFlex="15" class="tableHeader table tableShort">Quantity</p>
+                <p fxFlex="17" class="tableHeader table tableShort">Cost</p>
+              </div>-->
+              <div fxLayout="row" *ngFor="let items of newRequest.requestItems">
+                <div class="tableItem table editItem">
+                  <button class="editIcon" mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon [inline]="true">more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+                    <button mat-menu-item color="primary" (click)="editItem(items)">
+                      <mat-icon [attr.color]="'something'" [color]="colorPrimary">edit</mat-icon>Edit
+                    </button>
+                    <button mat-menu-item color="warn" (click)="removeItem(items)">
+                      <mat-icon [attr.color]="'something'" [color]="colorWarn">delete_forever</mat-icon>Delete
+                    </button>
+                  </mat-menu>
+                </div>
+                <p fxFlex class="tableItem table tableLong">{{items.partNumber}}</p>
+                <p fxFlex class="tableItem table tableLong">{{items.name}}</p>
+                <p fxFlex class="tableItem table tableShort">{{items.quantity}}</p>
+                <p fxFlex class="tableItem table tableShort">{{items.cost}}</p>
+              </div>
+              <!--<div fxLayout="row" *ngFor="let items of newRequest.requestItems">
+                <div class="editItem">
+                  <button mat-icon-button color="warn" (click)="removeItem(items)">
+                    <mat-icon>remove_circle_outline</mat-icon>
+                  </button>
+                </div>
+                <mat-form-field fxFlex class="tableItem table tableLong">
+                  <input matInput [(ngModel)]=items.partNumber />
+                </mat-form-field>
+                <mat-form-field fxFlex class="tableItem table tableLong">
+                  <input matInput [(ngModel)]="items.name" />
+                </mat-form-field>
+                <mat-form-field fxFlex class="tableItem table tableShort">
+                  <input matInput [(ngModel)]="items.quantity" />
+                </mat-form-field>
+                <mat-form-field fxFlex class="tableItem table tableShort">
+                  <input matInput [(ngModel)]="items.cost" />
+                </mat-form-field>
+              </div>-->
+            </div>
+          </div>
+          <div>
+            <mat-toolbar>
+              <file-upload (onSelected)="fileChange($event)"></file-upload>
+              <button mat-button color="primary" (click)="service.addAttachments()" *ngIf="requests.id > 0"
+                      [disabled]="!(service.fileNames)">
+                Upload
+              </button>
+              <button mat-button color="warn" (click)="service.clearUploads()" [disabled]="!(service.filesNames)">
+                Cancel
+              </button>
+            </mat-toolbar>
+            <div *ngIf="service.fileNames.value.length > 0" class="upload-container">
+              <section class="upload-card mat-elevation-z2 card" *ngFor="let file of service.fileNames | async">
+                <p>{{file}}</p>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+  </ng-template>
+</div>

@@ -14,8 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="4.5.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,15 +40,17 @@
     <None Remove="ClientApp\src\app\dialogs\bins\admin\user-bin.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\bins\admin\vendor-bin.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\justifications\justifications.dialog.ts" />
+    <None Remove="ClientApp\src\app\dialogs\request-items\edit-items.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\request-items\request-items.dialog.ts" />
     <None Remove="ClientApp\src\app\dialogs\updates\vendor-update.dialog.ts" />
+    <None Remove="ClientApp\src\app\directives\numbers-only-validator.directive.ts" />
     <None Remove="ClientApp\src\app\interfaces\get-form-validation-errors.ts" />
     <None Remove="ClientApp\src\app\models\adUser.ts" />
     <None Remove="ClientApp\src\app\models\mission.ts" />
     <None Remove="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
     <None Remove="ClientApp\src\app\routes\property\property.component.ts" />
     <None Remove="ClientApp\src\app\routes\purchase\purchase.component.ts" />
-    <None Remove="ClientApp\src\app\routes\purchase\request\purchase-request.component.ts" />
+    <None Remove="ClientApp\src\app\routes\purchase\request\new-purchase-request.component.ts" />
     <None Remove="ClientApp\src\app\services\api\custom-validators.ts" />
     <None Remove="ClientApp\src\app\services\api\form.ts" />
     <None Remove="ClientApp\src\app\services\api\purchase-request.service.ts" />
@@ -74,15 +78,17 @@
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\user-bin.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\bins\admin\vendor-bin.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\justifications\justifications.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\dialogs\request-items\edit-items.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\request-items\request-items.dialog.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dialogs\updates\vendor-update.dialog.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\directives\numbers-only-validator.directive.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\get-form-validation-errors.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\adUser.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\mission.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\property\property.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\purchase.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\request\purchase-request.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\request\new-purchase-request.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\custom-validators.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\form.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\api\purchase-request.service.ts" />

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Logistics.Web.Controllers
@@ -43,6 +45,11 @@ namespace Logistics.Web.Controllers
         [HttpPost("[action]/{id}")]
         public async Task UploadRequestAttachments([FromRoute]int id)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception("Model State is Invalid");
+            }
+
             var files = Request.Form.Files;
 
             if (files.Count < 1)

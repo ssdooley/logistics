@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackerService } from '../snacker.service';
 
 import { Request, RequestAttachment, RequestItem, User, Mission, Attachment } from '../../models';
 import { CoreService } from '../core.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class PurchaseRequestService {
@@ -28,6 +29,14 @@ export class PurchaseRequestService {
   constructor(private core: CoreService, private http: HttpClient, private snacker: SnackerService) { }
 
   trackRequests = (request: Request) => request.id;
+
+  exportRequests() {
+    this.http.get('/api/export/ExportRequests', { responseType: 'blob' })
+      .subscribe(       
+          data => console.log('You recieved data'),
+          error => console.log(error)        
+      );
+  }
 
   getPurchaseRequests = () => this.http.get<Request[]>('/api/purchaseRequest/GetPurchaseRequests')
     .subscribe(
@@ -54,7 +63,7 @@ export class PurchaseRequestService {
         (id: number) => {
           
           console.log(id);
-            this.uploadAttachments(id, formData)
+            this.uploadAttachments(id)
             this.snacker.sendSuccessMessage(`${request.subject} succussfully added`);
             resolve(true);
           },
@@ -142,14 +151,14 @@ export class PurchaseRequestService {
           });
     })
 
-  uploadAttachments(requestId: number, formData: FormData) {
-    console.log('from uploadAttachments ' + requestId + " : " + formData)
-    
-    this.http.post('api/attachment/uploadRequestAttachments/' + requestId, formData, { headers: this.core.getUploadOptions() })
+  uploadAttachments(requestId: number) {
+    this.http.post('api/attachment/uploadRequestAttachments/' + requestId, this.files.value, { headers: this.core.getUploadOptions() })
       .subscribe(
-        () => {
+        (data) => {
           this.snacker.sendSuccessMessage('Request successfully submitted');
           //this.router.navigate(['/request', requestId]);
+
+          console.log(data)
         },
         err => {
           this.snacker.sendErrorMessage(err.error);

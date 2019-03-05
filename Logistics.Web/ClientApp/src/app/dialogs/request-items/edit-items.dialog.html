@@ -1,0 +1,39 @@
+<form #f="ngForm" class="form" (ngSubmit)="onSubmit(f)" novalidate>
+  <h2>Add Request Items Here</h2>  
+      <div class="container">
+        <div fxLayout="row" fxLayoutAlign="start start">
+          <div>
+            <mat-form-field class="form-group">
+              <input matInput type="text" [(ngModel)]="newItem.partNumber" name="partNumber" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="form-group">
+              <input matInput type="text" [(ngModel)]="newItem.name" name="item"/>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="form-group">
+              <input matInput type="text" [(ngModel)]="newItem.quantity" [pattern]="numPattern" #pNum="ngModel" name="quantity"/>
+              <mat-error *ngIf="pNum.errors?.pattern">Please use whole number greater than 0</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="form-group">
+              <input matInput type="text" [(ngModel)]="newItem.cost" [pattern]="costPattern" #pCost="ngModel" name="cost"/>
+              <mat-error *ngIf="pCost.errors?.pattern">This field only excepts the following format 1,252.25. No $ symbols or characters</mat-error>
+            </mat-form-field>
+          </div>         
+        </div>
+        <div mat-dialog-actions>
+          <!--<button [disabled]="!form.valid" mat-button (click)="existRequestItems()">Close</button>-->
+          <button [disabled]="!f.valid" mat-button (click)="addRequestItem()">Save</button>
+        </div>        
+      </div>
+</form>
+
+<!--<p>Form Value: {{f.value}}</p>
+<p>Form Valid: {{f.valid}}</p>-->
+<ng-template #loading>
+  <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</ng-template>

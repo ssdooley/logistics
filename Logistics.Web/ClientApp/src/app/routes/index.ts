@@ -10,7 +10,7 @@ import { AdminVendorsComponent } from './admin/vendors/admin-vendors.component';
 import { AdminAuthorizedRegulationComponent } from './admin/authorized-regulation/admin-authorized-regulation.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { PropertyComponent } from './property/property.component';
-import { PurchaseRequestComponent } from './purchase/request/purchase-request.component';
+import { NewPurchaseRequestComponent } from './purchase/request/new-purchase-request.component';
 
 export const RouteComponents = [
   HomeComponent,
@@ -23,7 +23,7 @@ export const RouteComponents = [
   AdminVendorsComponent,
   AdminAuthorizedRegulationComponent,
   PurchaseComponent,
-  PurchaseRequestComponent,
+  NewPurchaseRequestComponent,
   PropertyComponent,
 
 ];
@@ -48,8 +48,8 @@ export const Routes: Route[] = [
   {
     path: 'purchase', component: PurchaseComponent,
     children: [
-      { path: '', redirectTo: 'purchase-request', pathMatch: 'full' },
-      { path: 'purchase-request', component: PurchaseRequestComponent }
+      { path: '', redirectTo: 'new-purchase-request', pathMatch: 'full' },
+      { path: 'new-purchase-request', component: NewPurchaseRequestComponent }
     ]
   },
   { path: 'property', component: PropertyComponent },

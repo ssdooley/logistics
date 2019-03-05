@@ -10,8 +10,8 @@ var core_1 = require("@angular/core");
 var services_1 = require("../../../services");
 var models_1 = require("../../../models");
 var dialogs_1 = require("../../../dialogs");
-var PurchaseRequestComponent = /** @class */ (function () {
-    function PurchaseRequestComponent(dialog, service, priorityService, siteService, regulationService, attachmentService, snacker) {
+var NewPurchaseRequestComponent = /** @class */ (function () {
+    function NewPurchaseRequestComponent(dialog, service, priorityService, siteService, regulationService, attachmentService, snacker) {
         this.dialog = dialog;
         this.service = service;
         this.priorityService = priorityService;
@@ -25,22 +25,24 @@ var PurchaseRequestComponent = /** @class */ (function () {
         this.regCount = 0;
         this.newRequest = new models_1.Request();
         this.uploading = false;
+        this.colorWarn = 'warn';
+        this.colorPrimary = 'primary';
     }
-    PurchaseRequestComponent.prototype.ngOnInit = function () {
+    NewPurchaseRequestComponent.prototype.ngOnInit = function () {
         this.service.getPurchaseRequests();
         this.priorityService.getPriorities();
         this.siteService.getSites();
         this.regulationService.getAuthorizedRegulations();
         this.attachmentService.getAttachments();
     };
-    PurchaseRequestComponent.prototype.addPurchaseRequest = function (formData) {
+    NewPurchaseRequestComponent.prototype.addPurchaseRequest = function (formData) {
         this.service.addPurchaseRequest(this.newRequest, formData);
     };
-    PurchaseRequestComponent.prototype.addMission = function (event) {
+    NewPurchaseRequestComponent.prototype.addMission = function (event) {
         this.newRequest.mission = event.name;
         console.log(this.newRequest.mission);
     };
-    PurchaseRequestComponent.prototype.addJustification = function () {
+    NewPurchaseRequestComponent.prototype.addJustification = function () {
         var _this = this;
         this.dialog.open(dialogs_1.JustificationDialog, {
             data: this.service, width: '550px'
@@ -63,7 +65,7 @@ var PurchaseRequestComponent = /** @class */ (function () {
             }
         });
     };
-    PurchaseRequestComponent.prototype.addItems = function () {
+    NewPurchaseRequestComponent.prototype.addItems = function () {
         var _this = this;
         this.dialog.open(dialogs_1.RequestItemsDialog, { data: this.service, width: '850px' })
             .afterClosed()
@@ -77,14 +79,29 @@ var PurchaseRequestComponent = /** @class */ (function () {
             }
         });
     };
-    PurchaseRequestComponent.prototype.removeItem = function (item) {
+    NewPurchaseRequestComponent.prototype.editItem = function (item) {
+        var _this = this;
+        this.dialog.open(dialogs_1.EditItemsDialog, { data: item, width: '850px' })
+            .afterClosed()
+            .subscribe(function (result) {
+            if (result) {
+                _this.removeItem(item);
+                _this.newRequest.requestItems.push(result);
+                _this.itemsArray.push(result);
+            }
+            if (!result) {
+                console.log("No Items came back from the dialog");
+            }
+        });
+    };
+    NewPurchaseRequestComponent.prototype.removeItem = function (item) {
         //this.newRequest.requestItems.splice(item);
         console.log(item);
         var index = this.newRequest.requestItems.indexOf(item);
         console.log(index);
         this.newRequest.requestItems.splice(index, 1);
     };
-    PurchaseRequestComponent.prototype.fileChange = function (files) {
+    NewPurchaseRequestComponent.prototype.fileChange = function (files) {
         var fileNames = new Array();
         if (this.service.fileNames.value.length > 0 && files[0].length == 1) {
             this.snacker.sendErrorMessage("If you wish to upload multiple files, they must be selected at the same time");
@@ -99,7 +116,7 @@ var PurchaseRequestComponent = /** @class */ (function () {
             this.service.files.next(files[1]);
         }
     };
-    PurchaseRequestComponent.prototype.uploadFiles = function () {
+    NewPurchaseRequestComponent.prototype.uploadFiles = function () {
         if ((this.files && this.files.length > 0) && this.formData) {
             this.uploading = true;
             var res = this.attachmentService.uploadRequestAttachments(this.newRequest.id, this.formData);
@@ -110,19 +127,19 @@ var PurchaseRequestComponent = /** @class */ (function () {
             }
         }
     };
-    PurchaseRequestComponent.prototype.clearFiles = function () {
+    NewPurchaseRequestComponent.prototype.clearFiles = function () {
         this.files = null;
         this.formData = null;
     };
-    PurchaseRequestComponent = __decorate([
+    NewPurchaseRequestComponent = __decorate([
         core_1.Component({
-            selector: 'purchase-request',
-            templateUrl: 'purchase-request.component.html',
-            styleUrls: ['purchase-request.component.css'],
+            selector: 'new-purchase-request',
+            templateUrl: 'new-purchase-request.component.html',
+            styleUrls: ['new-purchase-request.component.css'],
             providers: [services_1.PurchaseRequestService, services_1.PriorityService, services_1.SiteService, services_1.AuthorizedRegulationService, services_1.AttachmentService]
         })
-    ], PurchaseRequestComponent);
-    return PurchaseRequestComponent;
+    ], NewPurchaseRequestComponent);
+    return NewPurchaseRequestComponent;
 }());
-exports.PurchaseRequestComponent = PurchaseRequestComponent;
-//# sourceMappingURL=purchase-request.component.js.map
+exports.NewPurchaseRequestComponent = NewPurchaseRequestComponent;
+//# sourceMappingURL=new-purchase-request.component.js.map

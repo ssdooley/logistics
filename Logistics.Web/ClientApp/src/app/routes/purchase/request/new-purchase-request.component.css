@@ -1,0 +1,74 @@
+.pageHeader {
+  background-color: lightgray;
+}
+.tableHeader {
+  border: 2px solid black;
+  background-color: lightgray;
+}
+.table {  
+  padding: 5px;
+  margin: 0px 0px 0px 0px;
+  font-weight: bold;
+  text-align: center;
+}
+.tableLong {
+  min-width: 100px;
+  flex-grow: 4;
+  margin: 0px 0px 0px 0px;  
+}
+
+.editTable {
+  width: 25px;
+  min-width: 25px;
+}
+.tableShort {
+  min-width: 50px
+}
+
+/*.tableItem {
+  padding: 2px;
+  margin: -15px 0px -15px 0px;
+}*/
+
+.tableItem {
+  border: 2px solid;
+  background-color: #00b0ff;
+  padding: 2px;
+  margin: 0px 0px 0px 0px;
+  max-height: 30px;
+}
+
+.editItem {
+  width: 31px;
+  max-height: 20px;
+}
+.editIcon {
+  font-size: 20px;
+  top: -12px;
+  left: -4px;
+}
+.requestSelect {
+  width: 100px;
+}
+.requestMatSelect {
+  /*background-color: aliceblue;*/
+  padding: 0px 0px 5px 0px;
+  text-align: center;
+}
+
+.requestBox {
+  /*background-color: aliceblue;*/
+  border: 3px solid black;
+  margin: 5px;
+}
+
+@media screen and (max-width: 1200px) {
+  .leftBody {
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+  .rightBody {
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+}

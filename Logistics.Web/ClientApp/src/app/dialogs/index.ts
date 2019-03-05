@@ -9,6 +9,7 @@ import { VendorUpdateDialog } from './updates/vendor-update.dialog';
 import { AuthorizedRegulationBinDialog } from './bins/admin/authorized-regulation-bin.dialog';
 import { JustificationDialog } from './justifications/justifications.dialog';
 import { RequestItemsDialog } from './request-items/request-items.dialog';
+import { EditItemsDialog } from './request-items/edit-items.dialog';
 
 export const Dialogs = [
   ConfirmDialog,
@@ -21,7 +22,8 @@ export const Dialogs = [
   VendorUpdateDialog,
   AuthorizedRegulationBinDialog,
   JustificationDialog,
-  RequestItemsDialog
+  RequestItemsDialog,
+  EditItemsDialog
 ];
 
 export * from './confirm.dialog';
@@ -35,3 +37,4 @@ export * from './updates/vendor-update.dialog';
 export * from './bins/admin/authorized-regulation-bin.dialog';
 export * from './justifications/justifications.dialog';
 export * from './request-items/request-items.dialog';
+export * from './request-items/edit-items.dialog';

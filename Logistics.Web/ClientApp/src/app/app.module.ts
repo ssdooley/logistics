@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { Routes, RouteComponents } from './routes';
 import { Components } from './components';
 import { Dialogs } from './dialogs';
+import { CustomDirectives } from './directives';
 
 @NgModule({
   declarations: [
     AppComponent,
     [...RouteComponents],
     [...Dialogs],
-    [...Components]
+    [...Components],
+    [...CustomDirectives]
   ],
   entryComponents: [
     [...Dialogs]

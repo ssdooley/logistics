@@ -3,17 +3,17 @@ import { SnackerService, PurchaseRequestService, PriorityService, SiteService, A
 
 import { MatDialog } from '@angular/material';
 import { Request, RequestItem, RequestAttachment, AuthorizedRegulation, Site, Priority } from '../../../models';
-import { ConfirmDialog, AuthorizedRegulationBinDialog, JustificationDialog, RequestItemsDialog } from '../../../dialogs'
+import { ConfirmDialog, AuthorizedRegulationBinDialog, JustificationDialog, RequestItemsDialog, EditItemsDialog } from '../../../dialogs'
 import { EventEmitter } from 'events';
 
 
 @Component({
-  selector: 'purchase-request',
-  templateUrl: 'purchase-request.component.html',
-  styleUrls: ['purchase-request.component.css'],
+  selector: 'new-purchase-request',
+  templateUrl: 'new-purchase-request.component.html',
+  styleUrls: ['new-purchase-request.component.css'],
   providers: [PurchaseRequestService, PriorityService, SiteService, AuthorizedRegulationService, AttachmentService]
 })
-export class PurchaseRequestComponent implements OnInit {
+export class NewPurchaseRequestComponent implements OnInit {
   selectedPriority = new Priority();
   selectedSite = new Site();
   selectedMission: string;
@@ -29,6 +29,8 @@ export class PurchaseRequestComponent implements OnInit {
   files: File[];
   uploading = false;
   fileNameArray: Array<string>;
+  colorWarn = 'warn';
+  colorPrimary = 'primary';
 
   constructor(
     public dialog: MatDialog,
@@ -92,6 +94,22 @@ export class PurchaseRequestComponent implements OnInit {
           console.log("No Items came back from the dialog")
         }
         
+      });
+  }
+
+  editItem(item: RequestItem) {
+    this.dialog.open(EditItemsDialog, { data: item, width: '850px' })
+      .afterClosed()
+      .subscribe((result: RequestItem) => {
+        if (result) {
+          this.removeItem(item);
+          this.newRequest.requestItems.push(result);
+          this.itemsArray.push(result);
+        }
+        if (!result) {
+          console.log("No Items came back from the dialog")
+        }
+
       });
   }
 
