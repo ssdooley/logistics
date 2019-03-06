@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackerService } from '../snacker.service';
@@ -18,6 +19,8 @@ export class PurchaseRequestService {
   files = new BehaviorSubject<FormData>(new FormData());
   fileNames = new BehaviorSubject<Array<string>>([]);
   requestId: number;
+  fileUrl: string = null;
+  fileName: string = null;
 
   requests$ = this.requests.asObservable();
   requestItems$ = this.requestItems.asObservable();
@@ -30,13 +33,7 @@ export class PurchaseRequestService {
 
   trackRequests = (request: Request) => request.id;
 
-  exportRequests() {
-    this.http.get('/api/export/ExportRequests', { responseType: 'blob' })
-      .subscribe(       
-          data => console.log('You recieved data'),
-          error => console.log(error)        
-      );
-  }
+ 
 
   getPurchaseRequests = () => this.http.get<Request[]>('/api/purchaseRequest/GetPurchaseRequests')
     .subscribe(
@@ -54,15 +51,15 @@ export class PurchaseRequestService {
     .subscribe(
       data => this.requests.next(data),
       err => this.snacker.sendErrorMessage(err.error)
-  )
+    )
 
   addPurchaseRequest = (request: Request, formData: FormData): Promise<boolean> =>
     new Promise((resolve) => {
       this.http.post('/api/purchaseRequest/AddPurchaseRequest', request)
         .subscribe(
-        (id: number) => {
-          
-          console.log(id);
+          (id: number) => {
+
+            console.log(id);
             this.uploadAttachments(id)
             this.snacker.sendSuccessMessage(`${request.subject} succussfully added`);
             resolve(true);
@@ -79,7 +76,7 @@ export class PurchaseRequestService {
   //    .subscribe(data => {
   //      console.log(`This is from the database : ${ data }`);
   //    });
-      
+
   //}
 
   updatePurchaseRequest = (request: Request): Promise<boolean> =>
@@ -171,4 +168,47 @@ export class PurchaseRequestService {
       data => this.deletedAttachments.next(data),
       err => this.snacker.sendErrorMessage(err.error)
     )
+
+  
+
+  exportRequests() {
+    this.http.get('api/export/ExportV2', { observe: 'response', responseType: 'blob' })
+      .subscribe(
+      (res) => {
+        var mediaType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        var blob = new Blob([res.body], { type: mediaType });
+        this.fileUrl = res.url;
+        console.log(this.fileUrl)        
+        let today = new Date();
+        let rightnow = formatDate(today, 'yyyyMMdd', 'en-US');
+        this.fileName = `Requests-${rightnow}.xlsx`
+        let strkeys = res.body;
+        console.log(this.fileName);
+        
+        })
+      }
+  
+
+  
+
+  public static DownloadFile(data: Blob, filename: string, mime: string): void {
+    var blob = new Blob([data], { type: mime || 'application/octet-stream' });
+    if (typeof window.navigator.msSaveBlob !== 'undefined') {
+      // IE workaround for "HTML7007: One or more blob URLs were 
+      // revoked by closing the blob for which they were created. 
+      // These URLs will no longer resolve as the data backing 
+      // the URL has been freed."
+      window.navigator.msSaveBlob(blob, filename);
+    }
+    else {
+      var blobURL = window.URL.createObjectURL(blob);
+      var tempLink = document.createElement('a');
+      tempLink.href = blobURL;
+      tempLink.setAttribute('download', filename);
+      tempLink.setAttribute('target', '_blank');
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+    }
+  }
 }

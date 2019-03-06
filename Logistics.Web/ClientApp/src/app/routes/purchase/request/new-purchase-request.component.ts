@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {  } from '@angular/common';
 import { SnackerService, PurchaseRequestService, PriorityService, SiteService, AuthorizedRegulationService, AttachmentService } from '../../../services';
 
 import { MatDialog } from '@angular/material';
@@ -111,6 +112,10 @@ export class NewPurchaseRequestComponent implements OnInit {
         }
 
       });
+  }
+
+  async exportToExcel() {
+    await this.service.exportRequests();
   }
 
   removeItem(item: RequestItem) {

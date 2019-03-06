@@ -8,6 +8,7 @@ using Logistics.Data.Extensions;
 using OfficeOpenXml;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace Logistics.Web.Controllers
 {
@@ -59,7 +60,66 @@ namespace Logistics.Web.Controllers
                 memoryStream.WriteTo(Response.Body);
             }
 
-            excel.Save();
+            Byte[] bin = excel.GetAsByteArray();
+            Response.Headers.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.Headers["content-length"] = bin.Length.ToString();
+            Response.Headers["content-disposition"] = "attachment; filename=Requets.xlsx";                       
         }
+
+        [HttpGet("exportv2")]
+        public async Task<IActionResult> ExportV2(CancellationToken cancellationToken)
+        {
+            // query data from database
+            await Task.Yield();
+
+            //var requests = await db.Requests
+            //    .Include(x => x.ItemGroups)
+            //    .Include(x => x.RequestAttachments)
+            //    .Include(x => x.RequestItems)
+            //    .ToListAsync();
+
+            var requests = await db.GetPurchaseRequests();
+
+            int numRows = requests.Count();
+
+            if (numRows <= 0)
+            {
+
+            }
+
+
+            var stream = new MemoryStream();
+
+            using (var package = new ExcelPackage(stream))
+            {
+                var workSheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                // simple way
+                workSheet.Cells.LoadFromCollection(requests, true);
+
+                //// mutual
+                //workSheet.Row(1).Height = 20;
+                //workSheet.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //workSheet.Row(1).Style.Font.Bold = true;
+                //workSheet.Cells[1, 1].Value = "No";
+                //workSheet.Cells[1, 2].Value = "Name";
+                //workSheet.Cells[1, 3].Value = "Age";
+
+                workSheet.Cells[3, 1].LoadFromCollection(requests, true);
+                workSheet.Cells.AutoFitColumns();
+                workSheet.Column(2).Width = 50;
+
+                package.Save();
+            }
+            stream.Position = 0;
+            string excelName = $"Requests-{DateTime.Now.ToString("yyyyMMddHHmmss")}.xlsx";
+
+            //return File(stream, "application/octet-stream", excelName);
+            return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+        }
+
+       
+
     }
 }

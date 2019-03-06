@@ -3,7 +3,10 @@
     <h1>Purchase Request</h1>
     <div class="pageHeader">
       <button mat-button color="primary" (click)="addPurchaseRequest($event)">Save</button>
-      <button mat-button color="warn" (click)="service.exportRequests()">Export</button>
+      <button mat-button color="warn" (click)="exportToExcel()">Generate Report</button>      
+        <button mat-raised-button color="primary" *ngIf="service.fileUrl">
+          <a href="{{service.fileUrl}}" download><mat-icon>cloud_download</mat-icon>&emsp;{{service.fileName}}</a>
+      </button>
     </div>
   </div>
   <div *ngIf="service.requests$ | async as requests else loading">
