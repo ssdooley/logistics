@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'pending-request',
   templateUrl: 'pending-request.component.html'
 })
-export class PendingRequest {
+export class PendingRequestComponent {
 
 }

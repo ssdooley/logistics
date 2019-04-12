@@ -38,3 +38,4 @@ export * from './vendor';
 export * from './adUser';
 export * from './authorizedRegulation';
 export * from './mission';
+export * from './excel-data';

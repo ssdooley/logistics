@@ -1,4 +1,4 @@
-<div *ngIf="service.manufacturers$ | async as manufacturers else loading">
+<div *ngIf="service.manufacturers$ | async as manufacturers">
   <div *ngIf="itemCategoryService.itemGroupCategories$ | async as groups">
     <div class="container">
       <mat-form-field>

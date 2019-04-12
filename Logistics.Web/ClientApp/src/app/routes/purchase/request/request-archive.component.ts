@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'request-archive',
   templateUrl: 'request-archive.component.html'
 })
-export class RequestArchive {
+export class RequestArchiveComponent {
 
 }

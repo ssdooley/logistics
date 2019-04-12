@@ -10,10 +10,10 @@ import {
 
 @Injectable()
 export class ItemCategoryService {
-  private itemGroupCategories = new BehaviorSubject<ItemGroupCategory[]>(null);
-  private itemCategories = new BehaviorSubject<ItemCategory[]>(null);
-  private deletedItemCategories = new BehaviorSubject<ItemCategory[]>(null);
-  private itemCategory = new BehaviorSubject<ItemCategory>(null);
+  public itemGroupCategories = new BehaviorSubject<ItemGroupCategory[]>(null);
+  public itemCategories = new BehaviorSubject<ItemCategory[]>(null);
+  public deletedItemCategories = new BehaviorSubject<ItemCategory[]>(null);
+  public itemCategory = new BehaviorSubject<ItemCategory>(null);
 
   itemGroupCategories$ = this.itemGroupCategories.asObservable();
   itemCategories$ = this.itemCategories.asObservable();
@@ -21,8 +21,8 @@ export class ItemCategoryService {
   itemCategory$ = this.itemCategory.asObservable();
 
   constructor(
-    private http: HttpClient,
-    private snacker: SnackerService
+    public http: HttpClient,
+    public snacker: SnackerService
   ) { }
 
   trackItemCategories = (itemCategory: ItemCategory) => itemCategory.id;

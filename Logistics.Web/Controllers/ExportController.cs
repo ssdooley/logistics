@@ -9,18 +9,27 @@ using OfficeOpenXml;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
+using Microsoft.AspNetCore.Http;
+using System.Text;
+using System.Data;
+using Logistics.Web.Extensions;
 
 namespace Logistics.Web.Controllers
 {
     [Route("api/[controller]")]
     public class ExportController : Controller
     {
+
+        
         private AppDbContext db;
+        private const string XlsxContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        
 
         public ExportController(AppDbContext db)
         {
             this.db = db;           
         }
+
         [HttpGet("[action]")]
         public async Task ExportRequests()
         {
@@ -119,7 +128,104 @@ namespace Logistics.Web.Controllers
             return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
 
-       
+        //[HttpPost("[action]")]
+        //public async Task<IActionResult> UploadExcel([FromRoute] CancellationToken cancellationToken)
+        //{
+        //    var file = Request.Form.Files[0];
+        //    if (file.Length < 1)
+        //    {
+        //        throw new Exception("No files provided for upload");
+        //    }
 
+        //    using (var memoryStream = new MemoryStream())
+        //    {
+        //        await file.CopyToAsync(memoryStream).ConfigureAwait(false);
+
+        //        using (var package = new ExcelPackage(memoryStream))
+        //        {
+        //            var worksheet = package.Workbook.Worksheets[0]; // Tip: To access the first worksheet, try index 1, not 0
+        //            return Content(readExcelPackageToString(package, worksheet));
+                    
+        //        }
+        //    }
+        //}
+
+        [HttpPost("[action]")]
+        public async Task<List<ExcelModel>> UploadExcel2([FromRoute] CancellationToken cancellationToken)
+        {
+            var file = Request.Form.Files[0];
+            List<ExcelModel> excelList = new List<ExcelModel>();
+            if (file.Length < 1)
+            {
+                throw new Exception("No files provided for upload");
+            }
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await file.CopyToAsync(memoryStream).ConfigureAwait(false);
+
+                    using (var package = new ExcelPackage(memoryStream))
+                    {
+                        var worksheet = package.Workbook.Worksheets.FirstOrDefault();
+
+                        excelList = worksheet.ImportExcelToList<ExcelModel>();                       
+                    }
+
+                }
+            }
+            catch (Exception err)
+            {
+                throw new Exception("You have encountered this error: " + err);
+            }
+            return excelList;
+        }
+
+
+
+        private string readExcelPackage(FileInfo fileInfo, string worksheetName)
+        {
+            using (var package = new ExcelPackage(fileInfo))
+            {
+                return readExcelPackageToString(package, package.Workbook.Worksheets[worksheetName]);
+            }
+        }
+
+        private string readExcelPackageToString(ExcelPackage package, ExcelWorksheet worksheet)
+        {
+            var rowCount = worksheet.Dimension?.Rows;
+            var colCount = worksheet.Dimension?.Columns;
+
+            if (!rowCount.HasValue || !colCount.HasValue)
+            {
+                return string.Empty;
+            }
+
+            var sb = new StringBuilder();
+            for (int row = 1; row <= rowCount.Value; row++)
+            {
+                for (int col = 1; col <= colCount.Value; col++)
+                {
+                    sb.AppendFormat("{0}\t", worksheet.Cells[row, col].Value);
+                }
+                sb.Append(Environment.NewLine);
+            }
+            return sb.ToString();
+        }
+
+        public class ExcelModel
+        {
+            public string Id { get; set; }
+            public string Justifications { get; set; }
+            public string Subject { get; set; }
+            public string Requirement { get; set; }
+            public string Mission { get; set; }
+            public string DateSubmitted { get; set; }
+            public string LastModified { get; set; }
+        }
+
+        
+
+        
     }
 }

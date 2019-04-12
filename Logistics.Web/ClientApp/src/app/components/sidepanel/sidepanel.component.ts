@@ -29,7 +29,7 @@ import { SidepanelService } from '../../services';
   ]
 })
 export class SidepanelComponent {
-  private state: string;
+  public state: string;
   constructor(
     public sidepanel: SidepanelService
   ) {

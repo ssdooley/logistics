@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackerService } from '../snacker.service';
 
-import { Request, RequestAttachment, RequestItem, User, Mission, Attachment } from '../../models';
+import { Request, RequestAttachment, RequestItem, User, Mission, Attachment, ExcelData } from '../../models';
 import { CoreService } from '../core.service';
 import { tap } from 'rxjs/operators';
 
@@ -14,6 +14,7 @@ export class PurchaseRequestService {
   private requestItems = new BehaviorSubject<RequestItem[]>(null);
   private missions = new BehaviorSubject<Mission[]>(null);
   private requestItem = new BehaviorSubject<RequestItem>(null);
+  private dataExcel = new BehaviorSubject<ExcelData[]>(null);
   deletedAttachments = new BehaviorSubject<Array<Attachment>>([]);
   uploading = new BehaviorSubject<boolean>(false);
   files = new BehaviorSubject<FormData>(new FormData());
@@ -21,15 +22,28 @@ export class PurchaseRequestService {
   requestId: number;
   fileUrl: string = null;
   fileName: string = null;
+  
 
   requests$ = this.requests.asObservable();
   requestItems$ = this.requestItems.asObservable();
   missions$ = this.missions.asObservable();
   requestItem$ = this.requestItem.asObservable();
+  dataExcel$ = this.dataExcel.asObservable();
 
   mission = [{ name: '1st' }, { name: '2nd' }];
 
-  constructor(private core: CoreService, private http: HttpClient, private snacker: SnackerService) { }
+constructor(private core: CoreService, private http: HttpClient, private snacker: SnackerService)
+{
+  interface excelData {
+    id: number;
+    justifications: string;
+    subject: string;
+    requirement: string;
+    mission: string;
+    DataSubmitted: number;
+    LastModified: number;
+  }
+}
 
   trackRequests = (request: Request) => request.id;
 
@@ -167,9 +181,7 @@ export class PurchaseRequestService {
     .subscribe(
       data => this.deletedAttachments.next(data),
       err => this.snacker.sendErrorMessage(err.error)
-    )
-
-  
+  )    
 
   exportRequests() {
     this.http.get('api/export/ExportV2', { observe: 'response', responseType: 'blob' })
@@ -183,13 +195,26 @@ export class PurchaseRequestService {
         let rightnow = formatDate(today, 'yyyyMMdd', 'en-US');
         this.fileName = `Requests-${rightnow}.xlsx`
         let strkeys = res.body;
-        console.log(this.fileName);
-        
-        })
-      }
+        console.log(this.fileName);       
+      })
+  }
   
-
-  
+  uploadExcel() {
+    console.log("from uploadExcel in Service");
+    console.log("before post" + this.fileName + this.fileNames + this.files + this.fileUrl)
+    this.http.post<ExcelData[]>('/api/export/UploadExcel2/', this.files.value, { headers: this.core.getUploadOptions() })
+        .subscribe(
+          (data) => {
+            this.snacker.sendSuccessMessage('Files successfully uploaded');           
+            this.dataExcel.next(data);
+            console.log(this.dataExcel.value);
+            console.log("after post" + this.fileName + this.fileNames + this.files + this.fileUrl)
+          },
+          err => {
+            this.snacker.sendErrorMessage(err.error);
+          }
+        )
+  }
 
   public static DownloadFile(data: Blob, filename: string, mime: string): void {
     var blob = new Blob([data], { type: mime || 'application/octet-stream' });
@@ -211,4 +236,11 @@ export class PurchaseRequestService {
       document.body.removeChild(tempLink);
     }
   }
+
+  clearUploads() {
+    this.files = new BehaviorSubject<FormData>(new FormData());
+    this.fileNames = new BehaviorSubject<Array<string>>([]);
+    console.log("files have been cleared" + this.files + this.fileNames + this.fileName + this.fileUrl)
+  }
+  
 }

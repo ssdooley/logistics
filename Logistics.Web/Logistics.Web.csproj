@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RuntimeFrameworkVersion>2.1.0</RuntimeFrameworkVersion>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <TypeScriptExperimentalDecorators>true</TypeScriptExperimentalDecorators>
@@ -46,8 +49,10 @@
     <None Remove="ClientApp\src\app\directives\numbers-only-validator.directive.ts" />
     <None Remove="ClientApp\src\app\interfaces\get-form-validation-errors.ts" />
     <None Remove="ClientApp\src\app\models\adUser.ts" />
+    <None Remove="ClientApp\src\app\models\excel-data.ts" />
     <None Remove="ClientApp\src\app\models\mission.ts" />
     <None Remove="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
+    <None Remove="ClientApp\src\app\routes\property\inventory.component.ts" />
     <None Remove="ClientApp\src\app\routes\property\property.component.ts" />
     <None Remove="ClientApp\src\app\routes\purchase\purchase.component.ts" />
     <None Remove="ClientApp\src\app\routes\purchase\request\new-purchase-request.component.ts" />
@@ -84,8 +89,10 @@
     <TypeScriptCompile Include="ClientApp\src\app\directives\numbers-only-validator.directive.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\interfaces\get-form-validation-errors.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\adUser.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\excel-data.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\mission.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\admin\authorized-regulation\admin-authorized-regulation.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\routes\property\inventory.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\property\property.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\purchase.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\routes\purchase\request\new-purchase-request.component.ts" />
@@ -113,8 +120,8 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="yarn install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="yarn build prod" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="yarn build:ssr prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="yarn build --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="yarn build:ssr --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>

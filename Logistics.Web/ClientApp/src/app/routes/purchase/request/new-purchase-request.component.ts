@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {  } from '@angular/common';
 import { SnackerService, PurchaseRequestService, PriorityService, SiteService, AuthorizedRegulationService, AttachmentService } from '../../../services';
 
@@ -8,6 +8,7 @@ import { ConfirmDialog, AuthorizedRegulationBinDialog, JustificationDialog, Requ
 import { EventEmitter } from 'events';
 
 
+
 @Component({
   selector: 'new-purchase-request',
   templateUrl: 'new-purchase-request.component.html',
@@ -15,6 +16,7 @@ import { EventEmitter } from 'events';
   providers: [PurchaseRequestService, PriorityService, SiteService, AuthorizedRegulationService, AttachmentService]
 })
 export class NewPurchaseRequestComponent implements OnInit {
+  @ViewChild('fileInput') fileInput;
   selectedPriority = new Priority();
   selectedSite = new Site();
   selectedMission: string;

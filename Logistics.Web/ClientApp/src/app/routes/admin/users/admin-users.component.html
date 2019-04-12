@@ -27,7 +27,7 @@
         </button>
     </mat-toolbar>
     <search-container [service]="service">
-        <div *ngIf="service.sourceUsers$ | async as users else loading" class="container" fxLayout="row | wrap" fxLayoutAlign="start start">
+        <div *ngIf="service.sourceUsers$ | async as users" class="container" fxLayout="row | wrap" fxLayoutAlign="start start">
             <div *ngFor="let u of users" class="background card elevated" fxLayout="column" fxLayoutAlign="start stretch">
               <p class="mat-body-strong">{{u.username}}</p>
               <section fxLayout="row" fxLayoutAlign="center center">

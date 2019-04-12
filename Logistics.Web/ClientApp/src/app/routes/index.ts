@@ -11,6 +11,10 @@ import { AdminAuthorizedRegulationComponent } from './admin/authorized-regulatio
 import { PurchaseComponent } from './purchase/purchase.component';
 import { PropertyComponent } from './property/property.component';
 import { NewPurchaseRequestComponent } from './purchase/request/new-purchase-request.component';
+import { PendingRequestComponent } from './purchase/request/pending-request.component';
+import { PurchaseRequestComponent } from './purchase/request/purchase-request.component';
+import { InventoryComponent } from './property/inventory.component';
+import { RequestArchiveComponent } from './purchase/request/request-archive.component';
 
 export const RouteComponents = [
   HomeComponent,
@@ -25,15 +29,17 @@ export const RouteComponents = [
   PurchaseComponent,
   NewPurchaseRequestComponent,
   PropertyComponent,
-
+  PendingRequestComponent,
+  PurchaseRequestComponent,
+  InventoryComponent,
+  RequestArchiveComponent
 ];
 
 export const Routes: Route[] = [
   { path: 'home', component: HomeComponent },
   {
-    path: 'admin',
-    component: AdminComponent,
-    children: [
+    path: 'admin', component: AdminComponent,
+     children: [
       { path: '', redirectTo: 'users', pathMatch: 'full' },
       { path: 'users', component: AdminUsersComponent },
       { path: 'sites', component: AdminSitesComponent },
@@ -49,10 +55,19 @@ export const Routes: Route[] = [
     path: 'purchase', component: PurchaseComponent,
     children: [
       { path: '', redirectTo: 'new-purchase-request', pathMatch: 'full' },
-      { path: 'new-purchase-request', component: NewPurchaseRequestComponent }
+      { path: 'new-purchase-request', component: NewPurchaseRequestComponent },
+      { path: 'pending-request', component: PendingRequestComponent },
+      { path: 'purchase-request', component: PurchaseRequestComponent },
+      { path: 'request-archive', component: RequestArchiveComponent },
     ]
   },
-  { path: 'property', component: PropertyComponent },
+  {
+    path: 'property', component: PropertyComponent,
+    children: [
+      { path: '', redirectTo: 'inventory', pathMatch: 'full' },
+      { path: 'inventory', component: InventoryComponent }
+    ]
+    },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

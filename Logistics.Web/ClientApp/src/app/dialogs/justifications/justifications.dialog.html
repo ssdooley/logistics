@@ -4,7 +4,7 @@
     <button mat-button color="accent" (click)="exitJustification()">Close</button>
   </div>
 </div>
-<div *ngIf="service.authorizedRegulations$ | async as regs else loading">
+<div *ngIf="service.authorizedRegulations$ | async as regs">
   
   <div mat-dialog-content fxLayout="row" fxLayoutAlign="start start" class="container" *ngFor="let r of regs">
     <button mat-icon-button color="primary">
