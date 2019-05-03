@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SnackerService } from '../snacker.service';
+import { DataSource } from '@angular/cdk/collections';
 
 import { Request, RequestAttachment, RequestItem, User, Mission, Attachment, ExcelData } from '../../models';
 import { CoreService } from '../core.service';
-import { tap } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
+import { ContainerDataSource } from '../../datasources';
+import { error } from '@angular/compiler/src/util';
 
 @Injectable()
 export class PurchaseRequestService {
@@ -15,6 +18,9 @@ export class PurchaseRequestService {
   private missions = new BehaviorSubject<Mission[]>(null);
   private requestItem = new BehaviorSubject<RequestItem>(null);
   private dataExcel = new BehaviorSubject<ExcelData[]>(null);
+  private sourceRequests = new BehaviorSubject<Request[]>(null)
+  
+
   deletedAttachments = new BehaviorSubject<Array<Attachment>>([]);
   uploading = new BehaviorSubject<boolean>(false);
   files = new BehaviorSubject<FormData>(new FormData());
@@ -22,7 +28,11 @@ export class PurchaseRequestService {
   requestId: number;
   fileUrl: string = null;
   fileName: string = null;
-  
+  dataRequests: Request[] = [];
+  dataSource = new BehaviorSubject<ContainerDataSource<Request>>(new ContainerDataSource<Request>());
+  hasDataSource = new BehaviorSubject<boolean>(false);
+  get data(): BehaviorSubject<Array<Request>> { return this.requests }
+  sourceRequests$ = this.sourceRequests.asObservable();
 
   requests$ = this.requests.asObservable();
   requestItems$ = this.requestItems.asObservable();
@@ -45,15 +55,32 @@ constructor(private core: CoreService, private http: HttpClient, private snacker
   }
 }
 
+  setContainerSource(dataSource: ContainerDataSource<Request>) {
+    this.dataSource.next(dataSource);
+    this.hasDataSource.next(true);
+  }
+  setSourceRequests = (data: Request[]) => this.sourceRequests.next(data);
+
+  private mapRequest = (r): Request => Object.assign(new Request(), r);
+
   trackRequests = (request: Request) => request.id;
 
  
 
-  getPurchaseRequests = () => this.http.get<Request[]>('/api/purchaseRequest/GetPurchaseRequests')
+  getPurchaseRequests = () => this.http.get<Request[]>('/api/purchaseRequest/GetPurchaseRequests')    
     .subscribe(
-      data => this.requests.next(data),
+    data => {
+      this.requests.next(data)
+      this.dataRequests = data
+    },
       err => this.snacker.sendErrorMessage(err.error)
-    )
+  )
+
+  
+
+  private extractData(res: Response) {
+    return res || error;
+  }
 
   getPurchaseRequest = (id: number) => this.http.get<Request[]>(`/api/purchaseRequest/GetPurchaseRequest/${id}`)
     .subscribe(

@@ -5,6 +5,7 @@ import { RequestItem } from './request-item';
 import { Site } from './site';
 import { User } from './user';
 
+
 export class Request {
   id: number;
   justifications: string;
@@ -24,6 +25,8 @@ export class Request {
   itemGroups: ItemGroup[];
   requestAttachments: RequestAttachment[];
   requestItems: RequestItem[];
+
+  get filter(): string { return `${this.id} ${this.subject} ${this.mission} ${this.dateSubmitted}`}
 
   constructor() {
     this.requestItems = new Array<RequestItem>();

@@ -54,7 +54,7 @@ export const Routes: Route[] = [
   {
     path: 'purchase', component: PurchaseComponent,
     children: [
-      { path: '', redirectTo: 'new-purchase-request', pathMatch: 'full' },
+      { path: '', redirectTo: 'pending-request', pathMatch: 'full' },
       { path: 'new-purchase-request', component: NewPurchaseRequestComponent },
       { path: 'pending-request', component: PendingRequestComponent },
       { path: 'purchase-request', component: PurchaseRequestComponent },
